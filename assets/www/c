@@ -1,0 +1,17 @@
+0a1
+> <uses-permission android:name="android.permission.CAMERA" />
+5d5
+< <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+8a9
+> <uses-permission android:name="android.permission.RECORD_VIDEO"/>
+11,13c12,14
+< <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+< <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+< <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
+---
+> <uses-permission android:name="android.permission.WRITE_CONTACTS" />   
+> <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />   
+> <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+15a17,18
+> [A
+> 
