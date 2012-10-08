@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?><feed xmlns='http://www.w3.org/2005/Atom' xmlns:openSearch='http://a9.com/-/spec/opensearchrss/1.0/' xmlns:gCal='http://schemas.google.com/gCal/2005'><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic</id><updated>2012-10-07T20:11:31.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='text'>familab.4am@gmail.com</title><subtitle type='text'>familab.4am@gmail.com</subtitle><link rel='alternate' type='text/html' href='https://www.google.com/calendar/embed?src=familab.4am%40gmail.com'/><link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic'/><link rel='http://schemas.google.com/g/2005#batch' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/batch'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic?max-results=25'/><link rel='next' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic?start-index=26&amp;max-results=25'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author><generator version='1.0' uri='http://www.google.com/calendar'>Google Calendar</generator><openSearch:totalResults>108</openSearch:totalResults><openSearch:startIndex>1</openSearch:startIndex><openSearch:itemsPerPage>25</openSearch:itemsPerPage><gCal:timezone value='America/New_York'/><gCal:timesCleaned value='0'/><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/thojr8fhap1k758ihp0b634pis</id><published>2012-09-26T02:13:43.000Z</published><updated>2012-09-28T19:11:58.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Raspberry Pi Bakeoff</title><summary type='html'>When: Sat Sep 29, 2012 12pm to 5pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 29, 2012 12pm to 5pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Let&amp;#39;s build some awesome hacks with the Raspberry Pi!
+
+Guests are welcome, but be advised, everyone will be laser focused on building projects for next week&amp;#39;s event. If you&amp;#39;d like a tour, or want to speak to some of our members, we highly recommend stopping by at the next Open House instead. Thanks!
+
+Be sure to check our camera feed at http://twitter.com/famduino, give us a heads up on IRC, or call us on the lab&amp;#39;s VoIP line before heading out so someone can look out for you.
+
+Things may get started earlier or later, but there will definitely be someone at the lab around noon to get things started.</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=dGhvanI4ZmhhcDFrNzU4aWhwMGI2MzRwaXMgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/thojr8fhap1k758ihp0b634pis'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/id40hkdv65nahslr4fkfqqnugs</id><published>2012-09-25T13:12:55.000Z</published><updated>2012-09-26T01:55:15.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Raspberry Pi Foundation Visits FamiLAB</title><summary type='html'>When: Fri Oct 5, 2012 7pm to Fri Oct 5, 2012 10pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Fri Oct 5, 2012 7pm to Fri Oct 5, 2012 10pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Eben Upton from the Raspberry Pi Foundation will be visiting FamiLAB. 
+
+Please RSVP for this free, public event here so we can ensure there are enough chairs and space for everyone: http://raspberrypi-at-familab.eventbrite.com/</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=aWQ0MGhrZHY2NW5haHNscjRma2ZxcW51Z3MgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/id40hkdv65nahslr4fkfqqnugs'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/tsc5lt4o1n03ogku80mqua3i8g</id><published>2012-09-19T16:20:16.000Z</published><updated>2012-09-19T16:20:16.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Introduction to Arduino</title><summary type='html'>When: Sat Oct 20, 2012 1pm to 4pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Oct 20, 2012 1pm to 4pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Arduino platform is an amazing way to learn more about electronics or to bring your latest idea to life.
+
+In this &amp;quot;all ages&amp;quot;* beginner’s class, you will learn the basics of the Arduino hardware, and how to install and use the Arduino software. You will build simple circuits that can be controlled with the Arduino and explore “shields” that are available to expand the Arduino. Bring your own Arduino and components, or pre-order an Arduino Starter Kit which includes an Arduino Uno, a USB cable, a solderless breadboard, jumper wires, and an assortment of switches, potentiometers, LEDs and resistors.
+
+RSVP Here: http://www.eventbrite.com/event/4400602320</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=dHNjNWx0NG8xbjAzb2drdTgwbXF1YTNpOGcgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/tsc5lt4o1n03ogku80mqua3i8g'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/av75i8p0jc06tkvjv3ftkv1vbk</id><published>2012-09-19T01:56:02.000Z</published><updated>2012-09-19T01:56:02.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>FamiLAB Game Night</title><summary type='html'>When: Sat Sep 22, 2012 4pm to Sat Sep 22, 2012 11:55pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 22, 2012 4pm to Sat Sep 22, 2012 11:55pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Members only game night to celebrate the anniversary of FamiLAB.</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=YXY3NWk4cDBqYzA2dGt2anYzZnRrdjF2YmsgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/av75i8p0jc06tkvjv3ftkv1vbk'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/lb9srd101m321ur1754sv6l13c</id><published>2012-08-12T21:09:38.000Z</published><updated>2012-09-17T14:27:56.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>FamiLAB Annual Member Meeting</title><summary type='html'>When: Sat Sep 22, 2012 1pm to 3pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 22, 2012 1pm to 3pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Please &lt;a href="http://www.google.com/url?q=http%3A%2F%2Ffamilabannualmeeting.eventbrite.com%2F&amp;amp;ust=1349652919855000&amp;amp;usg=AFQjCNFUTcQUWwF_t2sHT8EzyCchq5nZxg" target="_blank"&gt;RSVP&lt;/a&gt;
+Refreshments will be served.</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=bGI5c3JkMTAxbTMyMXVyMTc1NHN2NmwxM2MgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/lb9srd101m321ur1754sv6l13c'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/rv353r2lj6t5ehkihesu86ienk</id><published>2012-09-11T00:38:57.000Z</published><updated>2012-09-12T01:16:13.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Quick Introduction to Xbee</title><summary type='html'>When: Tue Sep 18, 2012 7pm to Tue Sep 18, 2012 8pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Tue Sep 18, 2012 7pm to Tue Sep 18, 2012 8pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: A quick presentation by Rob Reilly on Xbee radios. Demos and awesomeness to ensue. Be sure to show up and voice your support for the Xbee class he&amp;#39;s designing!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=cnYzNTNyMmxqNnQ1ZWhraWhlc3U4NmllbmsgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/rv353r2lj6t5ehkihesu86ienk'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/hg5d22p477utioi51kcia63avs</id><published>2012-09-11T18:10:35.000Z</published><updated>2012-09-11T18:10:52.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Global Synchronous Hackathon</title><summary type='html'>When: Sat Sep 15, 2012 to Sun Sep 16, 2012&amp;nbsp;
+&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 15, 2012 to Sun Sep 16, 2012 
+&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: For more details: http://hackerspaces.org/wiki/Synchronous_Hackathon/2012-09-15</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=aGc1ZDIycDQ3N3V0aW9pNTFrY2lhNjNhdnMgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/hg5d22p477utioi51kcia63avs'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/15p4lv95k97r8kcsel8r73dcu0</id><published>2012-09-11T00:30:23.000Z</published><updated>2012-09-11T00:30:23.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Linux, the DIY OS</title><summary type='html'>When: Thu Sep 13, 2012 8pm to 9:30pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Thu Sep 13, 2012 8pm to 9:30pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: An overview of the Linux features that make it so good for Do It Yourself for software and interface to hardware. (Presented by Steve Litt of GOLUG)</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=MTVwNGx2OTVrOTdyOGtjc2VsOHI3M2RjdTAgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/15p4lv95k97r8kcsel8r73dcu0'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/6ds4adesi790rnc67o81ec232c</id><published>2012-08-08T01:27:19.000Z</published><updated>2012-09-09T22:23:01.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>GOLUG Meeting @ FamiLAB</title><summary type='html'>When: Sat Sep 15, 2012 10am to 5pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: Meeting Room / General Lab
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 15, 2012 10am to 5pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: Meeting Room / General Lab
+&lt;br /&gt;Event Status: confirmed</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=NmRzNGFkZXNpNzkwcm5jNjdvODFlYzIzMmMgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/6ds4adesi790rnc67o81ec232c'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/g56nmcpgh1stn02bc4d0lhujfg</id><published>2012-09-07T20:03:30.000Z</published><updated>2012-09-07T20:03:30.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>ICCF Meeting at FamiLAB</title><summary type='html'>When: Sat Nov 3, 2012 1pm to 4pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Nov 3, 2012 1pm to 4pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Inventors Council of Central Florida meeting and introduction to FamiLAB</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=ZzU2bm1jcGdoMXN0bjAyYmM0ZDBsaHVqZmcgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/g56nmcpgh1stn02bc4d0lhujfg'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/bplhefv78g3ghoov8n296g6skg</id><published>2012-08-27T04:18:37.000Z</published><updated>2012-08-27T04:18:37.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Central Florida Raspberry Pi User&amp;#39;s Group</title><summary type='html'>When: Sat Sep 8, 2012 6pm to Sat Sep 8, 2012 9pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room &amp;amp; Lounge
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 8, 2012 6pm to Sat Sep 8, 2012 9pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room &amp;amp; Lounge
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: September meeting of the Central Florida Raspberry Pi User&amp;#39;s Group. Open to the public!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=YnBsaGVmdjc4ZzNnaG9vdjhuMjk2ZzZza2cgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/bplhefv78g3ghoov8n296g6skg'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/9e714mrqhi99bo17v5i1f3g2qg</id><published>2012-08-21T16:51:15.000Z</published><updated>2012-08-21T16:51:15.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>DC407 Monthly Meeting</title><summary type='html'>Recurring Event&lt;br&gt;
+First start: 2012-08-31 19:00:00 EDT
+&lt;br&gt;
+Duration: 10800
+&lt;br&gt;
+Except on:
+Fri Sep 28, 2012&amp;nbsp;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>Recurring Event&lt;br /&gt;
+First start: 2012-08-31 19:00:00 EDT
+&lt;br /&gt;
+Duration: 10800
+&lt;br /&gt;
+Except on:
+Fri Sep 28, 2012 
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: DC407 Monthly Meeting (http://www.dc407.com)
+
+If you would like to speak, or have something cool to demonstrate please contact abyssknight@dc407.com or post to the Google Group.</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=OWU3MTRtcnFoaTk5Ym8xN3Y1aTFmM2cycWdfMjAxMjA4MzFUMjMwMDAwWiBmYW1pbGFiLjRhbUBt' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/9e714mrqhi99bo17v5i1f3g2qg'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/daakbqmtkf0g2e83dq84hu45b8</id><published>2012-08-13T01:35:02.000Z</published><updated>2012-08-13T01:35:02.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Introduction to Soldering</title><summary type='html'>When: Sat Nov 3, 2012 10am to 1pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Nov 3, 2012 10am to 1pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: RSVP and Details: http://www.eventbrite.com/event/4112949944</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=ZGFha2JxbXRrZjBnMmU4M2RxODRodTQ1YjggZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/daakbqmtkf0g2e83dq84hu45b8'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/idlpi53r6gai2ak0afhj2t9nio</id><published>2012-08-13T01:33:41.000Z</published><updated>2012-08-13T01:33:42.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Introduction to Soldering</title><summary type='html'>When: Sat Oct 6, 2012 10am to 1pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Oct 6, 2012 10am to 1pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: RSVP and Details: http://www.eventbrite.com/event/4112929884</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=aWRscGk1M3I2Z2FpMmFrMGFmaGoydDluaW8gZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/idlpi53r6gai2ak0afhj2t9nio'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/1ooa6lu5q36vaprulc4p70kgng</id><published>2012-08-13T01:27:08.000Z</published><updated>2012-08-13T01:27:08.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Introduction to Soldering</title><summary type='html'>When: Sat Sep 8, 2012 1pm to 4pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Sep 8, 2012 1pm to 4pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: RSVP and Details: http://www.eventbrite.com/event/4112913836</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=MW9vYTZsdTVxMzZ2YXBydWxjNHA3MGtnbmcgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/1ooa6lu5q36vaprulc4p70kgng'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/hpq9pg3l2dre14turipniuvf1c</id><published>2012-07-25T03:43:58.000Z</published><updated>2012-07-25T03:44:31.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Micro Monday</title><summary type='html'>Recurring Event&lt;br&gt;
+First start: 2012-08-13 20:00:00 EDT
+&lt;br&gt;
+Duration: 7200
+
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>Recurring Event&lt;br /&gt;
+First start: 2012-08-13 20:00:00 EDT
+&lt;br /&gt;
+Duration: 7200
+
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Micro Monday is a public event for all things microcontroller and electronics related.  We get together once a month, for classroom stype instruction and show and tell, on the 2nd Monday of the month.</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=aHBxOXBnM2wyZHJlMTR0dXJpcG5pdXZmMWNfMjAxMjA4MTRUMDAwMDAwWiBmYW1pbGFiLjRhbUBt' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/hpq9pg3l2dre14turipniuvf1c'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/kstkpcl20rl3tlipkvnqrakeic</id><published>2012-07-11T03:02:35.000Z</published><updated>2012-07-11T03:02:35.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Central Florida Steampunk Association - TinkerNight</title><summary type='html'>When: Mon Sep 24, 2012 7pm to Mon Sep 24, 2012 10pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Mon Sep 24, 2012 7pm to Mon Sep 24, 2012 10pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Central Florida Steampunk Association will be having a TinkerNight at FamiLab on Monday, June 18 at 7:00 PM.  This is a gathering to work on projects, so there&amp;#39;s no agenda, but this is an opportunity to meet Steampunk makers, and see some projects they&amp;#39;re working on.  All are welcome!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=a3N0a3BjbDIwcmwzdGxpcGt2bnFyYWtlaWMgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/kstkpcl20rl3tlipkvnqrakeic'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/1j2sdvjupu3t99g4p2g4hgrna4</id><published>2012-07-11T03:01:56.000Z</published><updated>2012-07-11T03:01:56.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Central Florida Steampunk Association - TinkerNight</title><summary type='html'>When: Mon Aug 20, 2012 7pm to Mon Aug 20, 2012 10pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Mon Aug 20, 2012 7pm to Mon Aug 20, 2012 10pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Central Florida Steampunk Association will be having a TinkerNight at FamiLab on Monday, June 18 at 7:00 PM.  This is a gathering to work on projects, so there&amp;#39;s no agenda, but this is an opportunity to meet Steampunk makers, and see some projects they&amp;#39;re working on.  All are welcome!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=MWoyc2R2anVwdTN0OTlnNHAyZzRoZ3JuYTQgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/1j2sdvjupu3t99g4p2g4hgrna4'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/kdmp2ilb3qppnbu7h3noh09d2s</id><published>2012-07-11T03:01:01.000Z</published><updated>2012-07-11T03:01:01.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Central Florida Steampunk Association - TinkerNight</title><summary type='html'>When: Mon Jul 23, 2012 7pm to Mon Jul 23, 2012 10pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Mon Jul 23, 2012 7pm to Mon Jul 23, 2012 10pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Central Florida Steampunk Association will be having a TinkerNight at FamiLab on Monday, June 18 at 7:00 PM.  This is a gathering to work on projects, so there&amp;#39;s no agenda, but this is an opportunity to meet Steampunk makers, and see some projects they&amp;#39;re working on.  All are welcome!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=a2RtcDJpbGIzcXBwbmJ1N2gzbm9oMDlkMnMgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/kdmp2ilb3qppnbu7h3noh09d2s'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/g27mpes1ej0n6l44k4c243s6n4</id><published>2012-07-03T01:31:35.000Z</published><updated>2012-07-03T01:31:35.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>FamiLAB LAN Party (Members Only)</title><summary type='html'>When: Sat Jul 7, 2012 7pm to Sun Jul 8, 2012 12am&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Jul 7, 2012 7pm to Sun Jul 8, 2012 12am 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: FamiLAB LAN Party (Members Only)
+
+Bring your gaming rig and play some games with the FamiCrew. :D</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=ZzI3bXBlczFlajBuNmw0NGs0YzI0M3M2bjQgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/g27mpes1ej0n6l44k4c243s6n4'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/cscpfddqitcalibvt5brl0s83o</id><published>2012-06-06T15:29:14.000Z</published><updated>2012-06-06T15:29:14.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Central Florida Steampunk Association - TinkerNight</title><summary type='html'>When: Mon Jun 18, 2012 7pm to Mon Jun 18, 2012 10pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Mon Jun 18, 2012 7pm to Mon Jun 18, 2012 10pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Central Florida Steampunk Association will be having a TinkerNight at FamiLab on Monday, June 18 at 7:00 PM.  This is a gathering to work on projects, so there&amp;#39;s no agenda, but this is an opportunity to meet Steampunk makers, and see some projects they&amp;#39;re working on.  All are welcome!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=Y3NjcGZkZHFpdGNhbGlidnQ1YnJsMHM4M28gZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/cscpfddqitcalibvt5brl0s83o'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/b57srb0ctor048l29l2ls9hc3g</id><published>2012-05-31T02:55:27.000Z</published><updated>2012-05-31T02:55:27.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Intro to Arduino</title><summary type='html'>When: Sat Jul 14, 2012 10am to 12pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat Jul 14, 2012 10am to 12pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: The Arduino platform is an amazing way to learn more about electronics or to bring your latest idea to life.
+In this &amp;quot;all ages&amp;quot;* beginner’s class, you will learn the basics of the Arduino hardware, and how to install and use the Arduino software. You will build simple circuits that can be controlled with the Arduino and explore “shields” that are available to expand the Arduino. Bring your own Arduino and components, or pre-order an Arduino Starter Kit which includes an Arduino Uno, a USB cable, a solderless breadboard, jumper wires, and an assortment of switches, potentiometers, LEDs and resistors.
+ 
+Members  - FREE (does not include hardware)
+Non-Members - $20 (does not include hardware)
+Optional Arduino Starter Kit (from adafruit industries) - $45
+
+Please Note: A personal laptop will be required to participate. If you do not purchase the Arduino Starter Kit, you will need to bring Arduino hardware to participate. 
+
+Required hardware: Arduino or Arduino-compatible board, USB cable, solderless breadboard, jumper wires. If your Arduino board is not-usb powered, please bring a small power supply.
+
+*Children must be accompanied by an adult who will help faciliate the learning process. 
+
+RSVP at: http://www.eventbrite.com/event/3657608004</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=YjU3c3JiMGN0b3IwNDhsMjlsMmxzOWhjM2cgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/b57srb0ctor048l29l2ls9hc3g'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/k1ma21ck03akd7al7noavsgjkc</id><published>2012-05-28T15:08:32.000Z</published><updated>2012-05-29T03:04:04.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Python Basics</title><summary type='html'>When: Thu Jun 7, 2012 7pm to Thu Jun 7, 2012 8pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Thu Jun 7, 2012 7pm to Thu Jun 7, 2012 8pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: If you&amp;#39;re interested in Python, you won&amp;#39;t want to miss the 7th June 2012 class as David Billsbrough and Steve Litt&amp;#39;s material on &amp;quot;Introduction to the Python&amp;quot; programming language. David will delve into the benefits of using Python as well as how to write excellent Python. Steve will delve into writing object oriented Python, specifically: &amp;quot;How to make classes, how to instantiate objects from those classes, and a tiny bit about inheritance and &amp;quot;what&amp;#39;s the deal with private variables.
+
+RSVP at: http://pythonbasics.eventbrite.com/</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=azFtYTIxY2swM2FrZDdhbDdub2F2c2dqa2MgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/k1ma21ck03akd7al7noavsgjkc'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/n1nmkb9ql6711cskgf3ncbjtmk</id><published>2012-05-28T03:22:26.000Z</published><updated>2012-05-28T03:22:26.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>DC407</title><summary type='html'>When: Fri Jun 1, 2012 7pm to Fri Jun 1, 2012 11:55pm&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: FamiLAB Meeting Room
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Fri Jun 1, 2012 7pm to Fri Jun 1, 2012 11:55pm 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: FamiLAB Meeting Room
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Information Security Group - Open to the Public
+
+For more information, see dc407.com</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=bjFubWtiOXFsNjcxMWNza2dmM25jYmp0bWsgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/n1nmkb9ql6711cskgf3ncbjtmk'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry><entry><id>http://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/2egdc4aoc1ot8av1sf19i6ajlk</id><published>2012-05-18T05:30:58.000Z</published><updated>2012-05-18T05:30:58.000Z</updated><category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/g/2005#event'/><title type='html'>Saturday Hackathon!</title><summary type='html'>When: Sat May 19, 2012 6pm to Sun May 20, 2012 6am&amp;nbsp;
+EDT&lt;br&gt;
+
+&lt;br&gt;Where: 1355 Bennet Dr #129, Orlando, FL
+&lt;br&gt;Event Status: confirmed</summary><content type='html'>When: Sat May 19, 2012 6pm to Sun May 20, 2012 6am 
+EDT&lt;br /&gt;
+
+&lt;br /&gt;Where: 1355 Bennet Dr #129, Orlando, FL
+&lt;br /&gt;Event Status: confirmed
+&lt;br /&gt;Event Description: Another hackathon!
+
+Last week, 
+Dustin made a &amp;#39;momentum tracker&amp;#39; that flashes a red, green, yellow, or blue light depending on frequency of changes in a google documents collection.
+The rest of us were to busy netrek&amp;#39;ing to produce anything. 
+
+Join us and make stuff!</content><link rel='alternate' type='text/html' href='https://www.google.com/calendar/event?eid=MmVnZGM0YW9jMW90OGF2MXNmMTlpNmFqbGsgZmFtaWxhYi40YW1AbQ' title='alternate'/><link rel='self' type='application/atom+xml' href='https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic/2egdc4aoc1ot8av1sf19i6ajlk'/><author><name>FamiLAB Orlando's Community Geek Lab</name><email>familab.4am@gmail.com</email></author></entry></feed>

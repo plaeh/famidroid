@@ -1,0 +1,1815 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:familab.4am@gmail.com
+X-WR-TIMEZONE:America/New_York
+BEGIN:VTIMEZONE
+TZID:America/New_York
+X-LIC-LOCATION:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTART:20120929T160000Z
+DTEND:20120929T210000Z
+DTSTAMP:20121007T223114Z
+UID:thojr8fhap1k758ihp0b634pis@google.com
+CREATED:20120926T021343Z
+DESCRIPTION:Let's build some awesome hacks with the Raspberry Pi!\n\nGuests
+  are welcome\, but be advised\, everyone will be laser focused on building 
+ projects for next week's event. If you'd like a tour\, or want to speak to 
+ some of our members\, we highly recommend stopping by at the next Open Hous
+ e instead. Thanks!\n\nBe sure to check our camera feed at http://twitter.co
+ m/famduino\, give us a heads up on IRC\, or call us on the lab's VoIP line 
+ before heading out so someone can look out for you.\n\nThings may get start
+ ed earlier or later\, but there will definitely be someone at the lab aroun
+ d noon to get things started.
+LAST-MODIFIED:20120928T191158Z
+LOCATION:FamiLAB
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Raspberry Pi Bakeoff
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121005T230000Z
+DTEND:20121006T020000Z
+DTSTAMP:20121007T223114Z
+UID:id40hkdv65nahslr4fkfqqnugs@google.com
+CREATED:20120925T131255Z
+DESCRIPTION:Eben Upton from the Raspberry Pi Foundation will be visiting Fa
+ miLAB. \n\nPlease RSVP for this free\, public event here so we can ensure t
+ here are enough chairs and space for everyone: http://raspberrypi-at-famila
+ b.eventbrite.com/
+LAST-MODIFIED:20120926T015515Z
+LOCATION:FamiLAB
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Raspberry Pi Foundation Visits FamiLAB
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121020T170000Z
+DTEND:20121020T200000Z
+DTSTAMP:20121007T223114Z
+UID:tsc5lt4o1n03ogku80mqua3i8g@google.com
+CREATED:20120919T162016Z
+DESCRIPTION:The Arduino platform is an amazing way to learn more about elec
+ tronics or to bring your latest idea to life.\n\nIn this "all ages"* beginn
+ er’s class\, you will learn the basics of the Arduino hardware\, and how to
+  install and use the Arduino software. You will build simple circuits that 
+ can be controlled with the Arduino and explore “shields” that are available
+  to expand the Arduino. Bring your own Arduino and components\, or pre-orde
+ r an Arduino Starter Kit which includes an Arduino Uno\, a USB cable\, a so
+ lderless breadboard\, jumper wires\, and an assortment of switches\, potent
+ iometers\, LEDs and resistors.\n\nRSVP Here: http://www.eventbrite.com/even
+ t/4400602320
+LAST-MODIFIED:20120919T162016Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Introduction to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120922T200000Z
+DTEND:20120923T035500Z
+DTSTAMP:20121007T223114Z
+UID:av75i8p0jc06tkvjv3ftkv1vbk@google.com
+CREATED:20120919T015602Z
+DESCRIPTION:Members only game night to celebrate the anniversary of FamiLAB
+ .
+LAST-MODIFIED:20120919T015602Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB Game Night
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120922T170000Z
+DTEND:20120922T190000Z
+DTSTAMP:20121007T223114Z
+UID:lb9srd101m321ur1754sv6l13c@google.com
+CREATED:20120812T210938Z
+DESCRIPTION:Please <A href="http://familabannualmeeting.eventbrite.com/">RS
+ VP</A>\nRefreshments will be served.
+LAST-MODIFIED:20120917T142756Z
+LOCATION:FamiLAB
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:FamiLAB Annual Member Meeting
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120918T230000Z
+DTEND:20120919T000000Z
+DTSTAMP:20121007T223114Z
+UID:rv353r2lj6t5ehkihesu86ienk@google.com
+CREATED:20120911T003857Z
+DESCRIPTION:A quick presentation by Rob Reilly on Xbee radios. Demos and aw
+ esomeness to ensue. Be sure to show up and voice your support for the Xbee 
+ class he's designing!
+LAST-MODIFIED:20120912T011613Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Quick Introduction to Xbee
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20120915
+DTEND;VALUE=DATE:20120917
+DTSTAMP:20121007T223114Z
+UID:hg5d22p477utioi51kcia63avs@google.com
+CREATED:20120911T181035Z
+DESCRIPTION:For more details: http://hackerspaces.org/wiki/Synchronous_Hack
+ athon/2012-09-15
+LAST-MODIFIED:20120911T181052Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Global Synchronous Hackathon
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120914T000000Z
+DTEND:20120914T013000Z
+DTSTAMP:20121007T223114Z
+UID:15p4lv95k97r8kcsel8r73dcu0@google.com
+CREATED:20120911T003023Z
+DESCRIPTION:An overview of the Linux features that make it so good for Do I
+ t Yourself for software and interface to hardware. (Presented by Steve Litt
+  of GOLUG)
+LAST-MODIFIED:20120911T003023Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Linux\, the DIY OS
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120915T140000Z
+DTEND:20120915T210000Z
+DTSTAMP:20121007T223114Z
+UID:6ds4adesi790rnc67o81ec232c@google.com
+CREATED:20120808T012719Z
+DESCRIPTION:
+LAST-MODIFIED:20120909T222301Z
+LOCATION:Meeting Room / General Lab
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:GOLUG Meeting @ FamiLAB
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121103T170000Z
+DTEND:20121103T200000Z
+DTSTAMP:20121007T223114Z
+UID:g56nmcpgh1stn02bc4d0lhujfg@google.com
+CREATED:20120907T200330Z
+DESCRIPTION:Inventors Council of Central Florida meeting and introduction t
+ o FamiLAB
+LAST-MODIFIED:20120907T200330Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:ICCF Meeting at FamiLAB
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120908T220000Z
+DTEND:20120909T010000Z
+DTSTAMP:20121007T223114Z
+UID:bplhefv78g3ghoov8n296g6skg@google.com
+CREATED:20120827T041837Z
+DESCRIPTION:September meeting of the Central Florida Raspberry Pi User's Gr
+ oup. Open to the public!
+LAST-MODIFIED:20120827T041837Z
+LOCATION:FamiLAB Meeting Room & Lounge
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Florida Raspberry Pi User's Group
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120831T190000
+DTEND;TZID=America/New_York:20120831T220000
+RRULE:FREQ=MONTHLY;BYDAY=-1FR
+EXDATE;TZID=America/New_York:20120928T190000
+DTSTAMP:20121007T223114Z
+UID:9e714mrqhi99bo17v5i1f3g2qg@google.com
+CREATED:20120821T165115Z
+DESCRIPTION:DC407 Monthly Meeting (http://www.dc407.com)\n\nIf you would li
+ ke to speak\, or have something cool to demonstrate please contact abysskni
+ ght@dc407.com or post to the Google Group.
+LAST-MODIFIED:20120821T165115Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DC407 Monthly Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121103T140000Z
+DTEND:20121103T170000Z
+DTSTAMP:20121007T223114Z
+UID:daakbqmtkf0g2e83dq84hu45b8@google.com
+CREATED:20120813T013502Z
+DESCRIPTION:RSVP and Details: http://www.eventbrite.com/event/4112949944
+LAST-MODIFIED:20120813T013502Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Introduction to Soldering
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121006T140000Z
+DTEND:20121006T170000Z
+DTSTAMP:20121007T223114Z
+UID:idlpi53r6gai2ak0afhj2t9nio@google.com
+CREATED:20120813T013341Z
+DESCRIPTION:RSVP and Details: http://www.eventbrite.com/event/4112929884
+LAST-MODIFIED:20120813T013342Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Introduction to Soldering
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120908T170000Z
+DTEND:20120908T200000Z
+DTSTAMP:20121007T223114Z
+UID:1ooa6lu5q36vaprulc4p70kgng@google.com
+CREATED:20120813T012708Z
+DESCRIPTION:RSVP and Details: http://www.eventbrite.com/event/4112913836
+LAST-MODIFIED:20120813T012708Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Introduction to Soldering
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120813T200000
+DTEND;TZID=America/New_York:20120813T220000
+RRULE:FREQ=MONTHLY;BYDAY=2MO
+DTSTAMP:20121007T223114Z
+UID:hpq9pg3l2dre14turipniuvf1c@google.com
+CREATED:20120725T034358Z
+DESCRIPTION:Micro Monday is a public event for all things microcontroller a
+ nd electronics related.  We get together once a month\, for classroom stype
+  instruction and show and tell\, on the 2nd Monday of the month.
+LAST-MODIFIED:20120725T034431Z
+LOCATION:FamiLAB
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Micro Monday
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120924T230000Z
+DTEND:20120925T020000Z
+DTSTAMP:20121007T223114Z
+UID:kstkpcl20rl3tlipkvnqrakeic@google.com
+CREATED:20120711T030235Z
+DESCRIPTION:The Central Florida Steampunk Association will be having a Tink
+ erNight at FamiLab on Monday\, June 18 at 7:00 PM.  This is a gathering to 
+ work on projects\, so there's no agenda\, but this is an opportunity to mee
+ t Steampunk makers\, and see some projects they're working on.  All are wel
+ come!
+LAST-MODIFIED:20120711T030235Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Florida Steampunk Association - TinkerNight
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120820T230000Z
+DTEND:20120821T020000Z
+DTSTAMP:20121007T223114Z
+UID:1j2sdvjupu3t99g4p2g4hgrna4@google.com
+CREATED:20120711T030156Z
+DESCRIPTION:The Central Florida Steampunk Association will be having a Tink
+ erNight at FamiLab on Monday\, June 18 at 7:00 PM.  This is a gathering to 
+ work on projects\, so there's no agenda\, but this is an opportunity to mee
+ t Steampunk makers\, and see some projects they're working on.  All are wel
+ come!
+LAST-MODIFIED:20120711T030156Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Florida Steampunk Association - TinkerNight
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120723T230000Z
+DTEND:20120724T020000Z
+DTSTAMP:20121007T223114Z
+UID:kdmp2ilb3qppnbu7h3noh09d2s@google.com
+CREATED:20120711T030101Z
+DESCRIPTION:The Central Florida Steampunk Association will be having a Tink
+ erNight at FamiLab on Monday\, June 18 at 7:00 PM.  This is a gathering to 
+ work on projects\, so there's no agenda\, but this is an opportunity to mee
+ t Steampunk makers\, and see some projects they're working on.  All are wel
+ come!
+LAST-MODIFIED:20120711T030101Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Florida Steampunk Association - TinkerNight
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120707T230000Z
+DTEND:20120708T040000Z
+DTSTAMP:20121007T223114Z
+UID:g27mpes1ej0n6l44k4c243s6n4@google.com
+CREATED:20120703T013135Z
+DESCRIPTION:FamiLAB LAN Party (Members Only)\n\nBring your gaming rig and p
+ lay some games with the FamiCrew. :D
+LAST-MODIFIED:20120703T013135Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB LAN Party (Members Only)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120618T230000Z
+DTEND:20120619T020000Z
+DTSTAMP:20121007T223114Z
+UID:cscpfddqitcalibvt5brl0s83o@google.com
+CREATED:20120606T152914Z
+DESCRIPTION:The Central Florida Steampunk Association will be having a Tink
+ erNight at FamiLab on Monday\, June 18 at 7:00 PM.  This is a gathering to 
+ work on projects\, so there's no agenda\, but this is an opportunity to mee
+ t Steampunk makers\, and see some projects they're working on.  All are wel
+ come!
+LAST-MODIFIED:20120606T152914Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Central Florida Steampunk Association - TinkerNight
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120714T140000Z
+DTEND:20120714T160000Z
+DTSTAMP:20121007T223114Z
+UID:b57srb0ctor048l29l2ls9hc3g@google.com
+CREATED:20120531T025527Z
+DESCRIPTION:The Arduino platform is an amazing way to learn more about elec
+ tronics or to bring your latest idea to life.\nIn this "all ages"* beginner
+ ’s class\, you will learn the basics of the Arduino hardware\, and how to i
+ nstall and use the Arduino software. You will build simple circuits that ca
+ n be controlled with the Arduino and explore “shields” that are available t
+ o expand the Arduino. Bring your own Arduino and components\, or pre-order 
+ an Arduino Starter Kit which includes an Arduino Uno\, a USB cable\, a sold
+ erless breadboard\, jumper wires\, and an assortment of switches\, potentio
+ meters\, LEDs and resistors.\n \nMembers  - FREE (does not include hardware
+ )\nNon-Members - $20 (does not include hardware)\nOptional Arduino Starter 
+ Kit (from adafruit industries) - $45\n\nPlease Note: A personal laptop will
+  be required to participate. If you do not purchase the Arduino Starter Kit
+ \, you will need to bring Arduino hardware to participate. \n\nRequired har
+ dware: Arduino or Arduino-compatible board\, USB cable\, solderless breadbo
+ ard\, jumper wires. If your Arduino board is not-usb powered\, please bring
+  a small power supply.\n\n*Children must be accompanied by an adult who wil
+ l help faciliate the learning process. \n\nRSVP at: http://www.eventbrite.c
+ om/event/3657608004
+LAST-MODIFIED:20120531T025527Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120607T230000Z
+DTEND:20120608T000000Z
+DTSTAMP:20121007T223114Z
+UID:k1ma21ck03akd7al7noavsgjkc@google.com
+CREATED:20120528T150832Z
+DESCRIPTION:If you're interested in Python\, you won't want to miss the 7th
+  June 2012 class as David Billsbrough and Steve Litt's material on "Introdu
+ ction to the Python" programming language. David will delve into the benefi
+ ts of using Python as well as how to write excellent Python. Steve will del
+ ve into writing object oriented Python\, specifically: "How to make classes
+ \, how to instantiate objects from those classes\, and a tiny bit about inh
+ eritance and "what's the deal with private variables.\n\nRSVP at: http://py
+ thonbasics.eventbrite.com/
+LAST-MODIFIED:20120529T030404Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Python Basics
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120601T230000Z
+DTEND:20120602T035500Z
+DTSTAMP:20121007T223114Z
+UID:n1nmkb9ql6711cskgf3ncbjtmk@google.com
+CREATED:20120528T032226Z
+DESCRIPTION:Information Security Group - Open to the Public\n\nFor more inf
+ ormation\, see dc407.com
+LAST-MODIFIED:20120528T032226Z
+LOCATION:FamiLAB Meeting Room
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DC407
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120519T220000Z
+DTEND:20120520T100000Z
+DTSTAMP:20121007T223114Z
+UID:2egdc4aoc1ot8av1sf19i6ajlk@google.com
+CREATED:20120518T053058Z
+DESCRIPTION:Another hackathon!\n\nLast week\, \nDustin made a 'momentum tra
+ cker' that flashes a red\, green\, yellow\, or blue light depending on freq
+ uency of changes in a google documents collection.\nThe rest of us were to 
+ busy netrek'ing to produce anything. \n\nJoin us and make stuff!
+LAST-MODIFIED:20120518T053058Z
+LOCATION:1355 Bennet Dr #129\, Orlando\, FL
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Saturday Hackathon!
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20120526
+DTEND;VALUE=DATE:20120527
+DTSTAMP:20121007T223114Z
+UID:9v5si73gts9doelcvvomgdknvk@google.com
+CREATED:20120125T130454Z
+DESCRIPTION:www.orlandominimakerfaire.com
+LAST-MODIFIED:20120517T180259Z
+LOCATION:Central Florida Fairgrounds
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Orlando Mini Maker Faire 2012
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120512T220000Z
+DTEND:20120513T100000Z
+DTSTAMP:20121007T223114Z
+UID:2v0ttrb7rvfbe9812ctm50hgkc@google.com
+CLASS:PUBLIC
+CREATED:20120509T041730Z
+DESCRIPTION:A couple of us are getting tired of doing client work nonstop a
+ ll week\, yet we somehow still want to write software :p. Three of us plan 
+ to get together for a hackathon to make some of that stuff we dreamt of dur
+ ing the work week! Also\, we will be changing the world with software and s
+ uch. \n\nAll hackers are welcome\, members doubly so. We ask that attendees
+  be respectful and allow at least one room to be quiet for those who need i
+ t. \n\nFood will be purchased in bulk at the event when our tummys are empt
+ y.
+LAST-MODIFIED:20120509T041730Z
+LOCATION:FamiLab
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Saturday Hackathon!
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120505T160000Z
+DTEND:20120505T190000Z
+DTSTAMP:20121007T223114Z
+UID:clo4ejd1ld6c3uk98p85euvg7c@google.com
+CREATED:20120503T034240Z
+DESCRIPTION:A cookout at the lab! See this thread for details: http://forum
+ s.familab.org/index.php/topic\,188.0.html
+LAST-MODIFIED:20120503T034240Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiGrille 1.0
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120501T200000
+DTEND;TZID=America/New_York:20120501T220000
+DTSTAMP:20121007T223114Z
+UID:2dvn6qpjne2c3dlvdnqptl4il8@google.com
+RECURRENCE-ID;TZID=America/New_York:20120501T200000
+CLASS:PUBLIC
+CREATED:20110627T013539Z
+DESCRIPTION:Open house night is when we invite people who would like to lea
+ rn more about FamiLAB to come check things out!\n\nhttp://Familabopenhouse.
+ eventbrite.org\n\nSee the FamiLAB Public Classes & Events page for more det
+ ails: http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20120501T184437Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Open House Night
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120427T230000Z
+DTEND:20120428T030000Z
+DTSTAMP:20121007T223114Z
+UID:6t361io981e457gj48t9u6f3l0@google.com
+CLASS:PUBLIC
+CREATED:20120424T220525Z
+DESCRIPTION:DC407 April Meeting - Newbie CTF
+LAST-MODIFIED:20120424T220943Z
+LOCATION:FamiLAB Meeting Room & Lounge
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DC407 April
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120428T130000Z
+DTEND:20120428T160000Z
+DTSTAMP:20121007T223114Z
+UID:di6htvacsqa8234s8sf6p491ng@google.com
+CREATED:20120421T010720Z
+DESCRIPTION:This is a hands on class which will take about 3 hours. You nee
+ d to provide a small item you would like to make a copy of.  We will provid
+ e 16 oz. plastic cups to make the mold in.  Your part needs to fit in that 
+ cup with about a half inch to spare in all dimensions. The class will provi
+ de the material for a single use mold and a single part.  A first casting s
+ hould be something small and simple.  We will be using materials which set 
+ fast so we can do the whole process in the short time.  The result will be 
+ an opaque (white base) hard plastic. \nIf you would like to make more casti
+ ngs or make a larger cast please contact me so I can make sure we have suff
+ icient supplies on hand and determine how much extra would need to be paid.
+   A rule of thumb is $7 for members and $10 for non-members per 16 oz. extr
+ a mold volume.  All supplies except the part to be copied will be provided.
+   If you have questions regarding your desired casting item and the necessa
+ ry volume please call me at 407-859-8737 (TEC Engineering answering machine
+  will answer but be sure to leave a message.  I will most likely be able to
+  pick up.) before signing up.\n\nRegister at: http://intro2casting.eventbri
+ te.com/
+LAST-MODIFIED:20120421T010720Z
+LOCATION:FamiLAB Classroom
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY: Intro to Urethane Plastic Casting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120421T120000
+DTEND;TZID=America/New_York:20120421T200000
+RRULE:FREQ=WEEKLY;UNTIL=20120526T160000Z;BYDAY=SA
+EXDATE;TZID=America/New_York:20120526T120000
+DTSTAMP:20121007T223114Z
+UID:t6cvjn8sb9lvt3c5jursnj7ook@google.com
+CREATED:20120419T012933Z
+DESCRIPTION:Making something for Orlando Mini Maker Faire?  Meet your fello
+ w Makers at FamiLAB\, Orlando's Hackerspace\, for a night of Making!
+LAST-MODIFIED:20120419T012933Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Open "Maker" Day
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120522T230000Z
+DTEND:20120523T040000Z
+DTSTAMP:20121007T223114Z
+UID:lsdj368qsmo8ms54ha0bj8cgeo@google.com
+CREATED:20120419T012751Z
+DESCRIPTION:Making something for Orlando Mini Maker Faire?  Meet your fello
+ w Makers at FamiLAB\, Orlando's Hackerspace\, for a night of Making!
+LAST-MODIFIED:20120419T012751Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Open "Maker" Night
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120424T230000Z
+DTEND:20120425T040000Z
+DTSTAMP:20121007T223114Z
+UID:n1gjqeh4gbqi3c98d5n3dv10rs@google.com
+CREATED:20120419T012705Z
+DESCRIPTION:Making something for Orlando Mini Maker Faire?  Meet your fello
+ w Makers at FamiLAB\, Orlando's Hackerspace\, for a night of Making!
+LAST-MODIFIED:20120419T012721Z
+LOCATION:familab
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Open "Maker" Night
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120421T100000
+DTEND;TZID=America/New_York:20120421T170000
+RRULE:FREQ=WEEKLY;UNTIL=20120519T140000Z;BYDAY=SA
+DTSTAMP:20121007T223114Z
+UID:1i8nsvtb1t57ir7k984lb8rs78@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=FamiLA
+ B Orlando's Community Geek Lab;X-NUM-GUESTS=0:mailto:familab.4am@gmail.com
+CREATED:20120418T014511Z
+DESCRIPTION:A standing meeting for the FamiLAB Power Wheels Racing build(s)
+ .
+LAST-MODIFIED:20120418T014512Z
+LOCATION:FamiLAB Workshop
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Power Wheels Racing Series Working Session
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120417T190000
+DTEND;TZID=America/New_York:20120417T233000
+RRULE:FREQ=WEEKLY;UNTIL=20120522T230000Z;BYDAY=TU
+DTSTAMP:20121007T223114Z
+UID:9ujnnbjbr01a27ipdvl1lhsm34@google.com
+CREATED:20120418T014333Z
+DESCRIPTION:A standing meeting for the FamiLAB Power Wheels Racing build(s)
+ .
+LAST-MODIFIED:20120418T014333Z
+LOCATION:FamiLAB Workshop
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Power Wheels Racing Series Working Session
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120414T140000Z
+DTEND:20120414T170000Z
+DTSTAMP:20121007T223114Z
+UID:bkgel0cbjc0cgaqgdvb9on5kbg@google.com
+CLASS:PUBLIC
+CREATED:20120321T170937Z
+DESCRIPTION:http://lilypad-eorg.eventbrite.com/\n\nLearn to use the Lilypad
+  for making wearable circuits!  Lilypad is a\nhand-washable electronic circ
+ uit based on the versatile Arduino platform.\nCircuit connections are sewn 
+ (!) using electrically conductive\nthread.  This allows lights\, sensors\, 
+ push buttons\, etc. to be\nembedded in (or on) clothing or fabric.\n \nSupp
+ lies for this class include one Lilypad beginner's kit\, which has\nmany co
+ mponents to get you started. The kit is offered at a\nsignificant discount 
+ through this class\, and contains a Lilypad Simple\nboard (the 'brain' of t
+ he system)\, a button\, slide switch\, white and\ntri-color LEDs\, light an
+ d temperature sensors\, buzzer and vibration\nboards\, a removable USB conn
+ ector\, battery\, and two bobbins of\nconductive thread!\n \nNo sewing or c
+ ircuit experience necessary.  If you have a sewing\nmachine\, bring it!  Al
+ so\, if you have a specific idea you'd like to\ntry\, please email the even
+ t organizers so we can (hopefully!) help you\nout. We request that children
+  under 15 be accompanied by an adult\n(besides\, it's a great parent-child 
+ activity!).\n \nCost: $50 FamiLab members / $70 non-members\nBring your own
+  kit: Free for FamiLab members / $20 non-members
+LAST-MODIFIED:20120413T052909Z
+LOCATION:1355 Bennett Dr unit 129\, Longwood\, FL
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Soft Hacking
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120508T230000Z
+DTEND:20120509T000000Z
+DTSTAMP:20121007T223114Z
+UID:l9j1b952ad4ik6ul8nngec96lo@google.com
+CREATED:20120411T041951Z
+DESCRIPTION:
+LAST-MODIFIED:20120411T042003Z
+LOCATION:familab
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB "Do Day"
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120409T230000Z
+DTEND:20120410T020000Z
+DTSTAMP:20121007T223114Z
+UID:n79j7i232r86pbr0rqh6klhe0s@google.com
+CLASS:PUBLIC
+CREATED:20120205T020228Z
+DESCRIPTION:
+LAST-MODIFIED:20120406T150158Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:3
+STATUS:CONFIRMED
+SUMMARY:Micro Monday
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120410T230000Z
+DTEND:20120411T035900Z
+DTSTAMP:20121007T223114Z
+UID:9dg00kahrq2ndekvvobmu7oclo@google.com
+CREATED:20120406T150036Z
+DESCRIPTION:We have too much stuff in no particular order.  Come help us st
+ raighten up the lab.  There will be shelves!  And boxes!  We might even thr
+ ow away a junk PC or ten!
+LAST-MODIFIED:20120406T150151Z
+LOCATION:FamiLAB
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:FamiLAB "do day" at FamiLAB
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120414T133000Z
+DTEND:20120414T220000Z
+DTSTAMP:20121007T223114Z
+UID:ug30kml9lah51tpqm2lnbak3k0@google.com
+CLASS:PUBLIC
+CREATED:20120321T171043Z
+DESCRIPTION:http://barcamporlando.org/\n\nBarCamp Orlando is an annual comm
+ unity-building event which aims to bring people from different backgrounds 
+ together for cooperative learning. Technologies such as Ruby\, PHP\, Java a
+ nd C will be present alongside graphic design\, music\, photography\, and o
+ ther new media. We hope to provide free t-shirts and lunch to all attendees
+ \, but can only do so with assistance from sponsors.\n\n\nSchedule\n\n9:30 
+ AM Doors open\, people can sign up for talks on the whiteboard\n10:00 AM Ta
+ lks begin at the four venues. Each presentation will last 25 minutes (we re
+ commend leaving 5 minutes at the end for discussion)\n12:00 PM Lunch is ser
+ ved\n1:00 PM Talks resume\n6:00 PM BarCamp ends and the after party starts 
+ at TBA
+LAST-MODIFIED:20120321T171148Z
+LOCATION:The Plaza 189 South Orange Ave. Orlando\, FL 32801
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Barcamp Orlando
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120325T040000Z
+DTEND:20120325T090000Z
+DTSTAMP:20121007T223114Z
+UID:d1arpnrcq0360m1d6p4drq9lko@google.com
+CREATED:20120321T151544Z
+DESCRIPTION:
+LAST-MODIFIED:20120321T151544Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Sunday Morning Code
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20120331
+DTEND;VALUE=DATE:20120402
+DTSTAMP:20121007T223114Z
+UID:8qh48q17kefj5pji1en487t1p0@google.com
+CLASS:PUBLIC
+CREATED:20120316T195112Z
+DESCRIPTION:There is a designer by the name of Peter Molyneux\, (Populous\,
+ Black & White\, Fable...) who says crazy bananas game design ideas. That ar
+ e all fucking amazing. Well\, to kinda make fun of this fact a fake twitter
+  was created @petermolydeux. The twitter basically says what we all believe
+  Peter Molyneux is thinking! Here is a choice collection of a few:\n\n* Wha
+ t if the pause button was a weapon? Until developers think outside the box 
+ we’re going downhill. \n* Try to imagine a game in which you have an imagin
+ ary friend who doesn’t believe you are real\, you must convince them that y
+ ou are. \n* What if everyone in the world had an explosive telephone in the
+ ir body? If you could find out their number you can detonate their phone? \
+ n* More at  http://molydeux.tumblr.com/
+LAST-MODIFIED:20120321T013809Z
+LOCATION:1355 Bennett Dr unit 129\, Longwood\, FL
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:GameJam - MolyJam.com
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120313T230000Z
+DTEND:20120314T010000Z
+DTSTAMP:20121007T223114Z
+UID:qbdtsk2gjj0lcrhhm82nlvonoc@google.com
+CREATED:20120205T022835Z
+DESCRIPTION:Basic electronics\, leading up to other fantastic classes in op
+ -amps\n\nMember's Only class this time!
+LAST-MODIFIED:20120310T022913Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Intro to Electronics (MO)
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120226T050000Z
+DTEND:20120226T090000Z
+DTSTAMP:20121007T223114Z
+UID:0racob4lj2k6smarv1bmhe6vfg@google.com
+CREATED:20120216T162508Z
+DESCRIPTION:
+LAST-MODIFIED:20120225T101409Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Sunday Morning Code
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120303T000000Z
+DTEND:20120303T040000Z
+DTSTAMP:20121007T223114Z
+UID:fmumo60oresdapcdso2tobegv0@google.com
+CLASS:PUBLIC
+CREATED:20120222T054146Z
+DESCRIPTION:http://dc407.com/2012/02/22/february-2012-meeting/
+LAST-MODIFIED:20120222T054146Z
+LOCATION:FamiLAB Classroom
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DC407 Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120304T180000Z
+DTEND:20120304T190000Z
+DTSTAMP:20121007T223114Z
+UID:gf2n5b5u676rgaathmo2a6ck68@google.com
+CREATED:20120219T193505Z
+DESCRIPTION:We're gonna build a bunch of these http://www.windowfarms.org/b
+ uildyourown and take them home
+LAST-MODIFIED:20120219T200450Z
+LOCATION:familab
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Biohacking: Hydroponics Build
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120331T140000Z
+DTEND:20120331T200000Z
+DTSTAMP:20121007T223114Z
+UID:vr2gnl6rkrvhgvqfrohl7eqjdo@google.com
+CLASS:PUBLIC
+CREATED:20120217T200300Z
+DESCRIPTION:http://tampabaymakerfaire.com/
+LAST-MODIFIED:20120217T200347Z
+LOCATION:14013 North 22nd St\, Tampa\, FL 33613
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Tampa Bay Mini Maker Faire
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120212T050000Z
+DTEND:20120212T090000Z
+DTSTAMP:20121007T223114Z
+UID:jpjer3d3fngqnpu8rgdb80t3p8@google.com
+CREATED:20120207T004635Z
+DESCRIPTION:The newest 4am class at the FamiLab! Bring something to teach i
+ f you have something you think you could teach\, bring coy programming chal
+ lenges if ya got\, bring frustrating and impossible coding challenges\, Bri
+ ng The Code!\n\nIt's a time to challenge yourself\, surprise yourself\, and
+  brag! 
+LAST-MODIFIED:20120207T004635Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Sunday Morning Code
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120216T003000Z
+DTEND:20120216T030000Z
+DTSTAMP:20121007T223114Z
+UID:2e5neumn2r56f2otmu1fc9oe6g@google.com
+CREATED:20120201T124004Z
+DESCRIPTION:See www.orlandominimakerfaire.com for more details...
+LAST-MODIFIED:20120206T123359Z
+LOCATION:FamiLAB (conference room) 
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Orlando Mini Maker Faire - Event Planning Team
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120205T050000Z
+DTEND:20120205T080000Z
+DTSTAMP:20121007T223114Z
+UID:os3lqds9n8r7h38okeqiq1lr6s@google.com
+CREATED:20120205T065853Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T065853Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Sunday Morning Code
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120311T170000Z
+DTEND:20120311T190000Z
+DTSTAMP:20121007T223114Z
+UID:ubjsjnhmpsgoq6ee7fmecjk4g4@google.com
+CREATED:20120205T030534Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T030648Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120218T150000Z
+DTEND:20120218T170000Z
+DTSTAMP:20121007T223114Z
+UID:va9ch3ffrh3mu1066pc9abjfjc@google.com
+CREATED:20120205T030043Z
+DESCRIPTION:http://orlandoarduino.eventbrite.com/
+LAST-MODIFIED:20120205T030043Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120514T230000Z
+DTEND:20120515T020000Z
+DTSTAMP:20121007T223114Z
+UID:867jsl0jjh09ktrkdjeba4csas@google.com
+CLASS:PUBLIC
+CREATED:20120205T020406Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T020406Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Micro Monday
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120312T230000Z
+DTEND:20120313T020000Z
+DTSTAMP:20121007T223114Z
+UID:s7lk5fs1tplh7pp8qmk2p9gp00@google.com
+CLASS:PUBLIC
+CREATED:20120205T020145Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T020238Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Micro Monday
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120520T173000Z
+DTEND:20120520T193000Z
+DTSTAMP:20121007T223114Z
+UID:cr37gj3t730d5cdjj32ht2cqj4@google.com
+CREATED:20120205T020102Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T020119Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Biohacking Meetup
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120415T173000Z
+DTEND:20120415T193000Z
+DTSTAMP:20121007T223114Z
+UID:avlss1i9lbg25h2fseeem5vd28@google.com
+CLASS:PUBLIC
+CREATED:20120205T020004Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T020052Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Biohacking Meetup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120318T173000Z
+DTEND:20120318T193000Z
+DTSTAMP:20121007T223114Z
+UID:ea54nevo1fga5q1bit2qso0mq8@google.com
+CLASS:PUBLIC
+CREATED:20120205T015859Z
+DESCRIPTION:
+LAST-MODIFIED:20120205T020017Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Biohacking Meetup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120219T183000Z
+DTEND:20120219T203000Z
+DTSTAMP:20121007T223114Z
+UID:pb3p8nadjhcph625otgetjftbc@google.com
+CLASS:PUBLIC
+CREATED:20120121T204444Z
+DESCRIPTION:http://famibiomeetup.eventbrite.com/\n\nThe FamiLab is starting
+  a Biohacking Lab! \nWe are shooting for BSL1 safety guidelines first\, whi
+ ch basically entails a walled room with ventillation\, non-absorbant counte
+ rtops\, and a no food-or-drink area. This allows us to do some pretty stand
+ ard things\, like culture E. Coli in agarose petri dishes\, and awesome thi
+ ngs like genetically engineer it to glow. \nThat glowing part hopefully hap
+ pens soon!\nTopics also of interest:\n- population studies\n- hydroponic ga
+ rdening\n- dinoflagellates and algae\n- genetic testing for practical purpo
+ ses\nLet's see where our second meeting takes us!
+LAST-MODIFIED:20120205T015857Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Biohacking Meetup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120225T160000Z
+DTEND:20120225T180000Z
+DTSTAMP:20121007T223114Z
+UID:bbv6691hirljm9d3af8dfbh7ms@google.com
+CREATED:20120204T143321Z
+DESCRIPTION:Please see http://www.orlandominimakerfaire.com/volunteers/ for
+  more details
+LAST-MODIFIED:20120204T143321Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Orlando Mini Maker Faire Volunteer Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120204T200000Z
+DTEND:20120205T020000Z
+DTSTAMP:20121007T223114Z
+UID:cr4ni8e936l7vhn8r5rhu8nvgg@google.com
+CREATED:20120201T171054Z
+DESCRIPTION:Workin' on the FamiLab's mission. Bring your own list of goals 
+ and achievements for the lab\, and listen to others' ideas\, so that we may
+  come to a better understanding of why we have such an awesome and huge lab
+ . 
+LAST-MODIFIED:20120202T142344Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Mission Workshop
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120229T000000Z
+DTEND:20120229T020000Z
+DTSTAMP:20121007T223114Z
+UID:duenop5i51luftrsgsnfd0vac8@google.com
+CREATED:20120201T171624Z
+DESCRIPTION:Hey\, all you aspiring FamiLAB instructors!  In this 2-hour cla
+ ss/workshop with Tracy Lunquist\, you will learn basic teaching methods and
+  create your own lesson plan.  Please come with a topic in mind for a class
+  you'd like to teach.
+LAST-MODIFIED:20120201T224822Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 3275
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:How to Teach a Class
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120225T000000Z
+DTEND:20120225T020000Z
+DTSTAMP:20121007T223114Z
+UID:0or7l0hisshmneobd6a3eq23mo@google.com
+CREATED:20120201T082652Z
+DESCRIPTION:Have you just heard about 'NodeJS' and want to get in while the
+  gettin's hot?\nDo you know enough javascript to open an alert box?\nDo you
+  want to make a real-time multiplayer web game in less than two hours?\n\nI
+ f you've answered 'yes' to any of these questions\, clear your Friday night
+  and head down to the FamiLab! Daniel Lewis will walk you through setting u
+ p a new NodeJS project with Socket.IO embedded\, then an hour of hacking aw
+ ay!\n\nBring sprites :)\n\n1355 Bennett Drive\, Unit 129\, Longwood FL 3275
+ 0
+LAST-MODIFIED:20120201T083228Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Bootstrap NodeJS + Socket.IO
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120219T203000Z
+DTEND:20120219T230000Z
+DTSTAMP:20121007T223114Z
+UID:ljou29g3hdv8msh2t68kbifqe0@google.com
+CLASS:PUBLIC
+CREATED:20120201T060639Z
+DESCRIPTION:Take awesome pictures of your projects by taking this class on 
+ introductory photography. Learn about shot composition\, light levels\, ape
+ rture\, shutter speed\, etc. in Scott Brauer's intro to photography class!\
+ n\nhttp://famiphotoclass.eventbrite.com/
+LAST-MODIFIED:20120201T082620Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Photography for Makers
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120209T000000Z
+DTEND:20120209T020000Z
+DTSTAMP:20121007T223114Z
+UID:mmi6s81jqoa5amh62ucuauco4g@google.com
+CLASS:PUBLIC
+CREATED:20120201T061502Z
+DESCRIPTION:If you don't know how to use our laser cutter and want to have 
+ super laser powers\, come to the lab on Wednesday\, Feb 8th\, and we will s
+ how you everything you need to know to be able to laser cut anything you wa
+ nt. \n\nExcept metal. We can't cut metal. \n\nhttp://familaser.eventbrite.c
+ om/\n\n(this is a member's only class)
+LAST-MODIFIED:20120201T080535Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Laser Cuttering
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120214T000000Z
+DTEND:20120214T030000Z
+DTSTAMP:20121007T223114Z
+UID:v58bovpe08gvmfcp687b1ker2g@google.com
+CLASS:PUBLIC
+CREATED:20120201T061741Z
+DESCRIPTION:
+LAST-MODIFIED:20120201T061741Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:MicroMonday
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120211T220000Z
+DTEND:20120212T050000Z
+DTSTAMP:20121007T223114Z
+UID:i6h3ik1btdf8d9f7ntikso1pe8@google.com
+CLASS:PUBLIC
+CREATED:20120119T222412Z
+DESCRIPTION:Retro video games (snes\, nes\, sega\, atari\, c64\, muds\, doo
+ m\, doom mods\, quake\, etc!)\n$5 cover\nCompetitions\n$40 in prizes + Fami
+ Lab swagshirts\nhttp://www.meetup.com/Orlando-Nerds-and-Geeks/events/421455
+ 02/
+LAST-MODIFIED:20120120T010402Z
+LOCATION:FamiLab HQ
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Retro Video Game Night
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120225T190000Z
+DTEND:20120225T220000Z
+DTSTAMP:20121007T223114Z
+UID:hvu1f5lerf2habo5pidrag5juo@google.com
+CREATED:20120113T043633Z
+DESCRIPTION:Join us for a workshop and build your own piezo based contact w
+ ith the crew of CMKT 4!\n\nhttps://www.facebook.com/events/229323287141616/
+LAST-MODIFIED:20120113T044139Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Contact Mic Workshop with CMKT4 at FamiLAB
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120121T183000Z
+DTEND:20120121T213000Z
+DTSTAMP:20121007T223114Z
+UID:fql6idahijkk0rmt9par4e94v0@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=FamiLA
+ B Orlando's Community Geek Lab;X-NUM-GUESTS=0:mailto:familab.4am@gmail.com
+CLASS:PUBLIC
+CREATED:20120112T193309Z
+DESCRIPTION:General meetup about neat biohacking tricks and biotechnology. 
+ Show'n'Tell followed by recent events followed by Lab Talk\n\nhttp://www.fa
+ cebook.com/events/252433251489376/
+LAST-MODIFIED:20120113T033546Z
+LOCATION:1355 Bennett Dr. Longwood\, FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Biohacking Meetup
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120127T000000Z
+DTEND:20120127T020000Z
+DTSTAMP:20121007T223114Z
+UID:dhk5a9dek1egbv8ra7oi4li9j0@google.com
+CREATED:20120110T213815Z
+DESCRIPTION:Monthly Young Makers (http://youngmakers.familab.org) meeting -
+  for more information\, email youngmakers@familab.org\n\nAgenda: Project Sh
+ ow & Tell (bring something you've made!) and Parents meeting to plan upcomi
+ ng meetings...
+LAST-MODIFIED:20120110T213815Z
+LOCATION:1355 Bennett Dr. Longwood\, FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Young Makers Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120119T000000Z
+DTEND:20120119T020000Z
+DTSTAMP:20121007T223114Z
+UID:443cpgfv0hf1k10ku38aqbloho@google.com
+CREATED:20120110T211438Z
+DESCRIPTION:THIS EVENT IS FOR CORE TEAM MEMBERS ONLY - If you are intereste
+ d in volunteering or exhibiting at the 2012 Orlando Mini Maker Faire\, plea
+ se email info@orlandominimakerfaire.com
+LAST-MODIFIED:20120110T211549Z
+LOCATION:1355 Bennett Dr\, Longwood\, Fl 32750 (Conference Room)
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Orlando Mini Maker Faire Core Team meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120128T150000Z
+DTEND:20120128T170000Z
+DTSTAMP:20121007T223114Z
+UID:akau4ah2e72jhoevveu7kea2pg@google.com
+CREATED:20120110T133010Z
+DESCRIPTION:http://orlandoarduino.eventbrite.com/
+LAST-MODIFIED:20120110T133104Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120121T150000Z
+DTEND:20120121T170000Z
+DTSTAMP:20121007T223114Z
+UID:33bud2f5qvfgq7dn1dmrd6kpas@google.com
+CREATED:20120110T132745Z
+DESCRIPTION:http://learn2solder.eventbrite.com/
+LAST-MODIFIED:20120110T132840Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Soldering
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20120109
+DTEND;VALUE=DATE:20120110
+DTSTAMP:20121007T223114Z
+UID:h08lh7beq18po4i9rk3q3rsbtc@google.com
+CREATED:20120106T035427Z
+DESCRIPTION:
+LAST-MODIFIED:20120106T035447Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:8pm Micro Monday at FamiLAB
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20120114T150000Z
+DTEND:20120114T200000Z
+DTSTAMP:20121007T223114Z
+UID:vevac83jcjitbb976qsos1pi30@google.com
+CREATED:20111227T125545Z
+DESCRIPTION:Details here: http://familab.org/blog/public-classes-events/\n
+LAST-MODIFIED:20120105T153415Z
+LOCATION:1355 Bennett Dr. Longwood\, FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:More IO with Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111221T010000Z
+DTEND:20111221T030000Z
+DTSTAMP:20121007T223114Z
+UID:u4h2hs6bs0pj6bghf0prq3e3og@google.com
+CREATED:20111122T032349Z
+DESCRIPTION:http://micromonday.eventbrite.com/\n\nMicro Monday now on Tuesd
+ ay.  Hope you can join us!
+LAST-MODIFIED:20111219T205822Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood\, FL 32750
+SEQUENCE:2
+STATUS:CONFIRMED
+SUMMARY:Microcontroller Monday
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20111213T200000
+DTEND;TZID=America/New_York:20111213T220000
+DTSTAMP:20121007T223114Z
+UID:ugl27ramlfc9b0kmm0cq6l8ves@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=FamiLA
+ B Orlando's Community Geek Lab;X-NUM-GUESTS=0:mailto:familab.4am@gmail.com
+RECURRENCE-ID;TZID=America/New_York:20111220T200000
+CREATED:20091116T022512Z
+DESCRIPTION:Monthly business meeting.  All members are invited to discuss F
+ amiLAB business.
+LAST-MODIFIED:20111208T224709Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:TENTATIVE
+SUMMARY:Monthly Meeting
+TRANSP:OPAQUE
+CATEGORIES:http://schemas.google.com/g/2005#event
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20091117T200000
+DTEND;TZID=America/New_York:20091117T213000
+RRULE:FREQ=MONTHLY;BYDAY=3TU;WKST=SU;UNTIL=20120117T045959Z
+DTSTAMP:20121007T223114Z
+UID:ugl27ramlfc9b0kmm0cq6l8ves@google.com
+CREATED:20091116T022512Z
+DESCRIPTION:Monthly business meeting.  All members are invited to discuss F
+ amiLAB business.
+LAST-MODIFIED:20111208T224709Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Monthly Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20120117T200000
+DTEND;TZID=America/New_York:20120117T213000
+RRULE:FREQ=MONTHLY;BYDAY=3TU;WKST=SU
+EXDATE;TZID=America/New_York:20120918T200000
+DTSTAMP:20121007T223114Z
+UID:c88g7r3ki9bl81358obkd32b14@google.com
+CREATED:20091116T022512Z
+DESCRIPTION:Monthly business meeting.  All members are invited to discuss F
+ amiLAB business.
+LAST-MODIFIED:20111208T224709Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Monthly Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111209T000000Z
+DTEND:20111209T020000Z
+DTSTAMP:20121007T223114Z
+UID:1dl4rsc16plv0ppanmvsrn50b8@google.com
+CREATED:20111114T123804Z
+DESCRIPTION:http://youngmakers.familab.org\n\nRSVP required via Young Maker
+ s mailing list or email to ian.cole@gmail.com
+LAST-MODIFIED:20111208T221714Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Young Makers Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111210T230000Z
+DTEND:20111211T050000Z
+DTSTAMP:20121007T223114Z
+UID:rhrlsb4kqff0bcb7fa7smb2pec@google.com
+CREATED:20111129T044241Z
+DESCRIPTION:
+LAST-MODIFIED:20111208T221622Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Holiday Party at FamiLAB
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;TZID=America/New_York:20110705T200000
+DTEND;TZID=America/New_York:20110705T220000
+RRULE:FREQ=MONTHLY;BYDAY=1TU
+DTSTAMP:20121007T223114Z
+UID:2dvn6qpjne2c3dlvdnqptl4il8@google.com
+CLASS:PUBLIC
+CREATED:20110627T013539Z
+DESCRIPTION:Open house night is when we invite people who would like to lea
+ rn more about FamiLAB to come check things out!\n\nSee the FamiLAB Public C
+ lasses & Events page for more details: http://familab.org/blog/public-class
+ es-events/
+LAST-MODIFIED:20111206T205714Z
+LOCATION:1355 Bennett Drive\, Unit 129\, Longwood FL 32750
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Open House Night
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111119T150000Z
+DTEND:20111119T170000Z
+DTSTAMP:20121007T223114Z
+UID:9g9oeamm1of46m3glja2pru9jg@google.com
+CREATED:20111031T002817Z
+DESCRIPTION:Soldering is fun and enables you to create a huge variety of co
+ ol electronic gadgetry.\nIn this class\, we will teach you the skills to pu
+ t together a MintyBoost portable electronic device charger. ( http://www.ad
+ afruit.com/products/14 )\n\nThe class fee includes the kit  and the enclosu
+ re (http://www.adafruit.com/products/16). A $21.50 value!\n\nWe will have p
+ lenty of soldering irons\, solder\, and all of the tools necessary to help 
+ you get your kit together and working.
+LAST-MODIFIED:20111117T154905Z
+LOCATION:Cloudspace\, 3403 Technological Avenue\, Orlando\, FL 32817-1476
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Introduction to Soldering
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111111T000000Z
+DTEND:20111111T020000Z
+DTSTAMP:20121007T223114Z
+UID:p80u69cl3ufgdv90mhte65flug@google.com
+CREATED:20111103T112822Z
+DESCRIPTION:Young Makers Nov Meeting - Soldering class...
+LAST-MODIFIED:20111103T112842Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Young Makers - Soldering Class
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111015T170000Z
+DTEND:20111015T200000Z
+DTSTAMP:20121007T223114Z
+UID:0mq1dl0t1dvs9fmgmpfamhusv8@google.com
+CREATED:20111005T230336Z
+DESCRIPTION:Details here: http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20111005T230336Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Halloween Hacking
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111015T160000Z
+DTEND:20111015T170000Z
+DTSTAMP:20121007T223114Z
+UID:h4kgrkqid59sc43e1bdj9ahgkc@google.com
+CREATED:20111005T230311Z
+DESCRIPTION:Lunch with members & anyone that wants to hang with us...we jus
+ t walk to Jimmy Johns or Pei Wei in the same shopping center...
+LAST-MODIFIED:20111005T230311Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lunch near Cloudspace
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111015T140000Z
+DTEND:20111015T160000Z
+DTSTAMP:20121007T223114Z
+UID:r6blpro7eeh33cktv7tp3b6cvs@google.com
+CREATED:20111005T230146Z
+DESCRIPTION:Details here: http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20111005T230215Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111001T140000Z
+DTEND:20111001T210000Z
+DTSTAMP:20121007T223114Z
+UID:i25jfbcoc4p4puh7bgl7vanvdo@google.com
+CREATED:20110925T043749Z
+DESCRIPTION:Members-Only workday - goal is to get some of our partially com
+ pleted repraps across the finish line\, and determine the parts needed to g
+ et breepbroop RAMPed up :)
+LAST-MODIFIED:20110925T043749Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Reprap Rescue
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20111013T230000Z
+DTEND:20111014T010000Z
+DTSTAMP:20121007T223114Z
+UID:a0q72610husmmifrchorb5udlg@google.com
+CREATED:20110911T175227Z
+DESCRIPTION:Contact ian.cole@gmail.com for more information
+LAST-MODIFIED:20110911T175423Z
+LOCATION:FamiLAB
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:YoungMakers Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110924T170000Z
+DTEND:20110924T200000Z
+DTSTAMP:20121007T223114Z
+UID:rfir3d6oqlvnmjl1rif534onlc@google.com
+CREATED:20110820T154305Z
+DESCRIPTION:Details here: http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20110830T004946Z
+LOCATION:Cloudspace
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:"Soft Hacking" Event
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110924T160000Z
+DTEND:20110924T170000Z
+DTSTAMP:20121007T223114Z
+UID:99t90fc962jn7s7cplo22ob5k4@google.com
+CREATED:20110820T154255Z
+DESCRIPTION:
+LAST-MODIFIED:20110830T004921Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Lunch near Cloudspace
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110924T140000Z
+DTEND:20110924T160000Z
+DTSTAMP:20121007T223114Z
+UID:fnvi38cdlthv8nf3sbpdk143ag@google.com
+CREATED:20110820T154239Z
+DESCRIPTION:Details here: http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20110830T004903Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino Class
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110917T150000Z
+DTEND:20110917T190000Z
+DTSTAMP:20121007T223114Z
+UID:vn1odaplgsm311t715pnlbeddc@google.com
+CREATED:20110820T154335Z
+DESCRIPTION:FamiLAB Public Classes & Events Page: http://familab.org/blog/p
+ ublic-classes-events/ \n\nHistory Center Link: http://thehistorycenter.org/
+ exhibits/gamespeopleplay
+LAST-MODIFIED:20110820T154441Z
+LOCATION:The History Center
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Retro Arcade at The History Center
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110917T190000Z
+DTEND:20110917T210000Z
+DTSTAMP:20121007T223114Z
+UID:m1h789pfcei728hpafr2rsmkns@google.com
+CREATED:20110820T154344Z
+DESCRIPTION:
+LAST-MODIFIED:20110820T154344Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Retro Arcade Cleanup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110917T130000Z
+DTEND:20110917T150000Z
+DTSTAMP:20121007T223114Z
+UID:h954n6cnviku8f0trhn2ukk1vk@google.com
+CREATED:20110820T154322Z
+DESCRIPTION:
+LAST-MODIFIED:20110820T154322Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Retro Arcade Setup
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110827T163000Z
+DTEND:20110827T180000Z
+DTSTAMP:20121007T223114Z
+UID:keinhv2q3514poajqr2q5273fk@google.com
+CREATED:20110815T115912Z
+DESCRIPTION:Join FamiLAB members for some food & socializing after the Intr
+ o to Arduino Class. We typically grab food from one of the many places in w
+ alking distance\, then regroup to discuss the class and "lessons learned" -
+  but sometimes we just hang out :)
+LAST-MODIFIED:20110815T120210Z
+LOCATION:TBD
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Lunch near Cloudspace
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110827T180000Z
+DTEND:20110827T200000Z
+DTSTAMP:20121007T223114Z
+UID:v5adfqnejf03s4k5i28atgvj34@google.com
+CREATED:20110815T115903Z
+DESCRIPTION:Annual Corporate Meeting - need 3/4 of all members in attendanc
+ e\, or represented by proxy. More information will be sent to the mailing l
+ ists...
+LAST-MODIFIED:20110815T115903Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB Annual Corporate Meeting
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110827T140000Z
+DTEND:20110827T160000Z
+DTSTAMP:20121007T223114Z
+UID:mptminduthl9khc82nt7gitnm0@google.com
+CREATED:20110815T115530Z
+DESCRIPTION:For information\, please see the FamiLAB Public Classes & Event
+ s page at: http://familab.org/blog/public-classes-events/\n
+LAST-MODIFIED:20110815T115530Z
+LOCATION:Cloudspace
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Intro to Arduino Class
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110723T140000Z
+DTEND:20110723T160000Z
+DTSTAMP:20121007T223114Z
+UID:nnf1u0j45bm5bvgffo1r4dqvdo@google.com
+CLASS:PUBLIC
+CREATED:20110701T014207Z
+DESCRIPTION:See the FamiLAB Public Classes & Events Page for more details: 
+ http://familab.org/blog/public-classes-events
+LAST-MODIFIED:20110711T120251Z
+LOCATION:Cloudspace\, 3403 Technological Avenue\, Orlando\, FL 32817-1476
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB Intro to Soldering Class
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110716T150000Z
+DTEND:20110716T190000Z
+DTSTAMP:20121007T223114Z
+UID:o7dlbv6a7jltc9o9ic6fg5ts2s@google.com
+CREATED:20110711T115122Z
+DESCRIPTION:See the FamiLAB Public Classes & Events Page for more details -
+  http://familab.org/blog/public-classes-events  \n\nHistory Center Event Li
+ nk - http://www.thehistorycenter.org/node/464\n\n
+LAST-MODIFIED:20110711T115300Z
+LOCATION:Orange County Regional History Center
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Retro Arcade at The History Center
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110723T180000Z
+DTEND:20110723T200000Z
+DTSTAMP:20121007T223114Z
+UID:06ipoabo7bjsn99qvug5lo329s@google.com
+CLASS:PUBLIC
+CREATED:20110709T203720Z
+DESCRIPTION:See the FamiLAB Public Classes & Events Page for more details: 
+ http://familab.org/blog/public-classes-events/
+LAST-MODIFIED:20110711T115149Z
+LOCATION:Cloudspace\, 3403 Technological Avenue\, Orlando\, FL 32817-1476
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:FamiLAB Soldering Class - Bring a Kit!
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20110331T160000Z
+DTEND:20110331T170000Z
+DTSTAMP:20121007T223114Z
+UID:6vkumo26iao68mkpdfkf1mdb74@google.com
+CREATED:20110330T204046Z
+DESCRIPTION:
+LAST-MODIFIED:20110425T000101Z
+LOCATION:Internet
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Projec Spec Submissions Due
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20100316T000000Z
+DTEND:20100316T020000Z
+DTSTAMP:20121007T223114Z
+UID:e42kdamfemnbjcrhevjfbddc1k@google.com
+CREATED:20100314T143849Z
+DESCRIPTION:
+LAST-MODIFIED:20100314T225405Z
+LOCATION:FAMiLab
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:Microcontroller Mondays at FAMiLab!
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20100326
+DTEND;VALUE=DATE:20100327
+DTSTAMP:20121007T223114Z
+UID:7fs66l2d5ekeastrtspl47u04s@google.com
+CREATED:20100310T051110Z
+DESCRIPTION:
+LAST-MODIFIED:20100314T075827Z
+LOCATION:FAMiLab - Metasploit and more!
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:DC407 Meeting at FAMiLab - Metasploit and more!
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART;VALUE=DATE:20100317
+DTEND;VALUE=DATE:20100318
+DTSTAMP:20121007T223114Z
+UID:oclh937jt2uf6j97kca1m4fdbg@google.com
+CREATED:20100312T005129Z
+DESCRIPTION:
+LAST-MODIFIED:20100314T075827Z
+LOCATION:FAMiLab
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:8pm Ruby Wednesday with Rodney at FAMiLab
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20091203T030000Z
+DTEND:20091203T040000Z
+DTSTAMP:20121007T223114Z
+UID:7l6ivld98bulfu5csfmo8mc2ao@google.com
+CREATED:20091116T053617Z
+DESCRIPTION:Hosted by: Mantonius  The first language lab will focus on Arab
+ ic!  Mantonius will provide all the material we will be learning from.  Com
+ e one come all who have a thirst for language!
+LAST-MODIFIED:20091220T093601Z
+LOCATION:FAMiLab HQ
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Polyglot Lab: Arabic
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20091121T000000Z
+DTEND:20091123T030000Z
+DTSTAMP:20121007T223114Z
+UID:b940itgoka4cuhbkpftiujb68k@google.com
+CLASS:PUBLIC
+CREATED:20091116T020007Z
+DESCRIPTION:Spend the weekend hacking away at whatever projects you have\, 
+ or find\, or find about to get involved in the weekend of the 20th-22nd wit
+ h 4 other Hackerspace groups around the country by teleconferenced webcam/m
+ ic/projector. We've got a lot of supplies!
+LAST-MODIFIED:20091220T093601Z
+LOCATION:FAMiLab HQ
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:InterSpace Hackathon
+TRANSP:OPAQUE
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20091118T020000Z
+DTEND:20091118T050000Z
+DTSTAMP:20121007T223114Z
+UID:adbm95dbu5cigu171gifqn3jt8@google.com
+CREATED:20091116T030637Z
+DESCRIPTION:Bring food and drinks and unfinished projects and finish them a
+ t the space!  If you don't have a project\, come over regardless and either
+  join in on the art making the art hackers will be creating or start someth
+ ing new.\n\nArt.Maker lab hosted by Indy: "I'm thinking for this Art Lab we
+  will all use the same photograph as reference and then recreate it in any 
+ medium we see fit.  I'll provide copies of the photograph\, you bring suppl
+ ies."\n
+LAST-MODIFIED:20091201T082734Z
+LOCATION:FAMiLab HQ
+SEQUENCE:1
+STATUS:CONFIRMED
+SUMMARY:Art.Maker Lab
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

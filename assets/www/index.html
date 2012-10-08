@@ -1,150 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Acceleration Example</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>FamiLAB App</title>
+        <link rel="stylesheet" href="jquery.mobile-1.2.0.min.css" />
+        <script src="jquery-1.8.2.min.js"></script>
+        <script src="jquery.mobile-1.2.0.min.js"></script>
+        <script src="common.js"></script>
+        <script src="index.js"></script>
 
-    <script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="socket.io.js"></script>
-    <script type="text/javascript" charset="utf-8">
 
-    // The watch id references the current `watchAcceleration`
-    var watchID = null;
-    var sock;
-    var calibrated = false;
-
-    var basex=0, basey=0, basez=0;
-    var x=0, y=0, z=0;
-    var f=false, b=false, l=false, r=false
-
-    // Constants
-    var tipping_point = 1.5;
-
-    // Wait for PhoneGap to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // PhoneGap is ready
-    //
-    function onDeviceReady() {
-        startWatch();
-    }
-
-    // Start watching the acceleration
-    //
-    function startWatch() {
-
-        // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
-
-        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
-    }
-
-    // Stop watching the acceleration
-    //
-    function stopWatch() {
-        if (watchID) {
-            navigator.accelerometer.clearWatch(watchID);
-            watchID = null;
-        }
-    }
-
-    function n_dots(n){ n=n*10;var s=''; while(n-->0) { s+='.' }; return s }
-    // onSuccess: Get a snapshot of the current acceleration
-    /name=/
-    function onSuccess(acceleration) {
-        if(!calibrated)return;
-
-        x = acceleration.x - basex
-        y = acceleration.y - basey
-        z = acceleration.z - basez
-        $('#accelerometer').html( 'Acceleration X: ' + x + '<br />' +
-                            'Acceleration Y: ' + y + '<br />' +
-                            'Acceleration Z: ' + z + '<br />')
-        $('.represent').css({
-            width: (acceleration.x*40) + 'px',
-            height: (acceleration.y*40) + 'px'
-        })
-
-        if (x < -tipping_point && r==false) {
-            r=true
-            l=false
-            sock.emit('modify', ['dr',x])
-        } else if (x > tipping_point && l==false) {
-            r=false
-            l=true
-            sock.emit('modify', ['dl',x])
-        } else if (x > -tipping_point && x < tipping_point && (l==true || r==true)) {
-            r=false
-            l=false
-            sock.emit('modify', ['d0',x])
-        }
-    
-        if (y < -tipping_point && b==false) {
-            f=false
-            b=true
-            sock.emit('modify', ['gf',y])
-        }  else if (y > tipping_point && f==false) {
-            f=true
-            b=false
-            sock.emit('modify', ['gb',y])
-        } else if (y > -tipping_point && y < tipping_point && (b==true || f==true)) {
-            b=false
-            f=false
-            sock.emit('modify', ['g0',y])
-        }
-        x+=basex
-        y+=basey
-        z+=basez
-    }
-
-    // onError: Failed to get the acceleration
-    //
-    function onError() {
-        alert('onError!');
-    }
-
-    $(document).ready(function() {
-        alert('asdf')
-        $('#connect').click(function() {
-            sock = io.connect('http://' + $('#server').val() + ':8080/');
-            $('#connect,#server,label').hide()
-        })
-
-        $('.calibrate').click(function() {
-            calibrated = true
-            basex = x
-            basey = y
-            basez = z
-            sock.emit('modify', ['g0',0])
-            sock.emit('modify', ['d0',0])
-        })
-    })
-
-    </script>
-
-    <style type="text/css">
-        .calibrate {
-            width: 200px;
-            height: 100px;
-            background-color: #eaeaea;
-            text-align:center;
-            line-height: 100px;
-        }
-        .represent {
-            background-color: #eaeaea;
-        }
-        #accelerometer {
-            font-size: 22px;
-        }
-    </style>
-  </head>
-  <body>
-    <div id="accelerometer">Waiting for accelerometer...</div>
-    <div class='calibrate'>Calibrate</div>
-    <label for='server'>IP address of server: </label>
-    <input type='text' id='server' value='192.168.1.104'/>
-    <button id='connect'>connect</button>
-    <div class='represent'>&nbsp;</div>
-  </body>
+        <style>
+            /* App custom styles */
+        </style>
+    </head>
+    <body>
+        <!-- Home -->
+        <div data-role="page" data-theme="a" id="page1">
+            <div id="header" data-theme="a" data-role="header">
+                <h3>
+                   FamiAPP 
+                </h3>
+            </div>
+            <div data-role="content" style="text-align:center;">
+                <div id="famduino" style="width: 100%; position: relative; background-color: #fbfbfb; border: 1px solid #b8b8b8;">
+                    <a data-transition="slide">
+                        <img id="famduino" src="familab.jpg" alt="image" style="width: 100%; max-height: 200px;" />
+                    </a>
+                </div>
+                <ul id="recent_events" data-role="listview" data-divider-theme="a" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Upcoming Events
+                    </li>
+                </ul>
+                <ul id="recent_posts" data-role="listview" data-divider-theme="a" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Recent Forum Posts
+                    </li>
+                </ul>
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center=familab, longwood, fl&zoom=14&size=288x200&markers=FamiLAB, Longwood, FL&sensor=true" width="288" height="200" />
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+    </body>
 </html>
