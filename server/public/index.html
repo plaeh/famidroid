@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+<script src="jquery.ui.touch-punch.min.js"></script>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    var sock = io.connect()
+    var users = {}
+    
+    // send a message called 'modify' to the server with given data
+    sock.emit('modify', {
+        x: 5,
+        y: 9
+    })
+    
+    // handle a message called 'message' that receives data
+    sock.on('message', function(data) {
+        console.log('received message', data)
+    })
+
+    // handle new users
+    sock.on('new_user', function(data) {
+        users[data.id] = data
+        // you could also call new_user(), and make a new_user function
+    })
+
+    // handle users leaving
+    sock.on('remove_user', function(data) {
+        delete[data.id]
+        // you could also call remove_user(), and make a remove_user function
+    })
+        
+})
+</script>
+
+<style type="text/css">	
+</style>
+</head>
+
+<body>
+
+</body>
+
+</html>

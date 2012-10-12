@@ -276,73 +276,88 @@ function closestEnabledButton( element ) {
 
 
 
-// Get recent forum posts
-//$.get('http://forums.familab.org/index.php?action=.xml;type=rss', function(data) {
-$.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=forums', function(data) {
-    var recent_posts_list = $('#recent_posts')
-    var recent_posts = $(data).find('item').map(function(i,e) { 
-        return { 
-            title: $(e).find('title').text()
-          , url: $(e).find('link').text() 
-        }
-    })
-    $(recent_posts).each(function(i,e) {
-        var list_item = $('<li data=theme="a"><a href="' + e.url + '" data-transition="slide">' + e.title + '</a></li>')
-        recent_posts_list.append(list_item)
-    })
-    recent_posts_list.listview('refresh')
-})
-
-
-// Get recent events
-//$.get('https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic', function(data) {
-$.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=calendar', function(data) {
-    var recent_events_list = $('#recent_events')
-    var recent_events = $(data).find('entry').map(function(i,e) { 
-        var urls_in_content = $(e).find('content').text().match(/http[^ ]*/)
-          , url
-        if (urls_in_content && urls_in_content.length > 0) {
-            url = urls_in_content[0]
-        } else {
-            url = $(e).find('link[rel=alternate]').attr('href')
-        }
-
-        var when = $(e).text().split("\n")[0]
-        var dates = when.match(/[a-zA-Z]{3} [0-9]{1,2}, [0-9]{4}/)
-          , date = 0
-        if (dates) {
-           date = Date.parse(dates[dates.length-1])
-        }
-        
-        return { 
-            title: $(e).find('title').text()
-          , date: date
-          , url: url
-        }
-    })
-
-    var events_after_today = []
-    var current_time = (new Date()).getTime()
-    for (var i=0; i<recent_events.length; i++) {
-        if (current_time < recent_events[i].date) {
-            events_after_today.push(recent_events[i])
-        }
-    }
-
-    $(events_after_today).each(function(i,e) {
-        var list_item = $('<li data=theme="a"><a href="' + e.url + '" data-transition="slide">' + e.title + '</a></li>')
-        recent_events_list.append(list_item)
-    })
-    recent_events_list.listview('refresh')
-})
-
-$.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=famduino', function(data) {
-    $('#famduino a').attr('href', data['url'])
-    $('#famduino img').attr('src', 'data:image/jpeg;base64, ' + data['image'])
-})
-
-
-
-
 
 })(jQuery);
+
+
+
+$(document).ready(function() {
+    // Get recent events
+    //$.get('https://www.google.com/calendar/feeds/familab.4am%40gmail.com/public/basic', function(data) {
+    $.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=calendar', function(data) {
+        var recent_events_list = $('#recent_events')
+        var recent_events = $(data).find('entry').map(function(i,e) { 
+            var urls_in_content = $(e).find('content').text().match(/http[^ ]*/)
+              , url
+            if (urls_in_content && urls_in_content.length > 0) {
+                url = urls_in_content[0]
+            } else {
+                url = $(e).find('link[rel=alternate]').attr('href')
+            }
+    
+            var when = $(e).text().split("\n")[0]
+            var dates = when.match(/[a-zA-Z]{3} [0-9]{1,2}, [0-9]{4}/)
+              , date = 0
+            if (dates) {
+               date = Date.parse(dates[dates.length-1])
+            }
+            
+            return { 
+                title: $(e).find('title').text()
+              , date: date
+              , url: url
+            }
+        })
+    
+        var events_after_today = []
+        var current_time = (new Date()).getTime()
+        for (var i=0; i<recent_events.length; i++) {
+            if (current_time < recent_events[i].date) {
+                events_after_today.push(recent_events[i])
+            }
+        }
+    
+        $(events_after_today).each(function(i,e) {
+            var list_item = $('<li data=theme="a"><a rel="external" href="' + e.url + '" data-transition="slide">' + e.title + '</a></li>')
+            recent_events_list.append(list_item)
+        })
+        recent_events_list.listview('refresh')
+    })
+    
+    $.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=famduino', function(data) {
+        $('#famduino a').attr('href', data['url'])
+        $('#famduino img').attr('src', 'data:image/jpeg;base64, ' + data['image'])
+    })
+
+    // Get recent forum posts
+    //$.get('http://forums.familab.org/index.php?action=.xml;type=rss', function(data) {
+    $.get('http://randomphp.levelsetlabs.com/famiproxy.php?resource=forums', function(data) {
+        var recent_posts_list = $('#recent_posts')
+        var recent_posts = $(data).find('item').map(function(i,e) { 
+            return { 
+                title: $(e).find('title').text()
+              , url: $(e).find('link').text() 
+            }
+        })
+        $(recent_posts).each(function(i,e) {
+            var list_item = $('<li data=theme="a"><a rel="external" href="' + e.url + '" data-transition="slide">' + e.title + '</a></li>')
+            recent_posts_list.append(list_item)
+        })
+        recent_posts_list.listview('refresh')
+    })
+})
+
+
+
+$(document).ready(function() {
+    var FAMIBUNTU_HOST = "192.168.10.7"
+    var sock = io.connect("http://" + FAMIBUNTU_HOST + ":3000/")
+    
+    sock.on('connect', function() {
+        alert('connected')
+        
+        sock.on('news', function(data) {
+            $(document).append($('<div>' + data + '</div>'))
+        })
+    })
+})
