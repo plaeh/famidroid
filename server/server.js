@@ -27,8 +27,9 @@ io.sockets.on('connection', function(client) {
 
   client.emit('message', { stuff: 'and then some' })
 
-  client.on('modify', function(message) {
-    console.log(eyes.inspect(message))
+  client.on('move_cnc_to', function(coords) {
+    // send coords { x:500, y:100 } to the cnc
+    console.log(eyes.inspect(coords))
   })
 
   client.on('disconnect', function() {
@@ -36,4 +37,7 @@ io.sockets.on('connection', function(client) {
     delete sockets[client.id]
   })
 })
+
+// update clients with cnc position data
+var cnc_positions = []
 

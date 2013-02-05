@@ -1,0 +1,2998 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>X-Frame Multi-Drop Serial Network (X-Net2)</TITLE>
+<META NAME="Template" CONTENT="C:\Program Files\Microsoft Office\Office\html.dot">
+</HEAD>
+<BODY LINK="#0000ff" VLINK="#800080">
+
+<B><FONT FACE="Arial" SIZE=5><P ALIGN="CENTER">X-Frame Multi-Drop Serial Network (X-Net2)</P>
+</B></FONT><P ALIGN="CENTER"><IMG SRC="Image1.gif" WIDTH=375 HEIGHT=375></P>
+<FONT FACE="Arial" SIZE=5><P>X-Frame Multi-Drop Serial Network (X-Net2)</P>
+</FONT><B><FONT FACE="Arial" SIZE=4><P>Description</P>
+</B></FONT><P ALIGN="JUSTIFY">X-Net2, the X-Frame multi-drop serial network protocol introduced with Release 1.3 of the X-Frame software, is a protocol that provides external serial command and read-back of <B>certain</B> controls appearing in a MediaMatrix view file. The devices that may be controlled are, Level, SubPreset, Ramp, Switch, and certain Routers. Up to 256 controls in each X-Frame, selected by the designer from the above list, can be controlled through X-Net2. It is also possible to use X-Net2 to read the status of certain controls in an X-Frame. The devices that may be read are: Gates, the gate outputs of the Automatic Mixers, and SubPresets. The hardware required for this is a standard 2 wire, half-duplex, RS-485 serial port. The serial command protocol used by X-Net2 is human-readable ASCII. It is possible to test and debug X-Net control of a specific view file using just a PC with a terminal program, a spare serial port, and an appropriate RS-485 adapter. An X-Frame will not respond to any RS-485 commands unless there is a running view file in the X-Frame.</P>
+<B><I><FONT FACE="Arial"><P>X-Net2 Devices</P>
+</B></I></FONT><P ALIGN="JUSTIFY">X-Net2 control is enabled by using control-wiring to wire an X-Net2 external control device to the device to be controlled. Note that there are two types of X-Net external serial control input devices: Level and Trigger. The X-Net2 Level devices may be connected to single or multi-channel Level devices, Ramp, Switch, or externally controllable Router devices. The X-Net2 Trigger devices may only be connected to SubPreset control-bus inputs, and are built into all SubPreset devices. The X-Net2 external serial output devices may be connected to the control-bus outputs of SubPreset, Gate, or Automatic Mixer devices.</P>
+<B><FONT FACE="Arial" SIZE=4><P>Communications Protocol</P>
+</B></FONT><P ALIGN="JUSTIFY">The X-Net2 communicates at a fixed setting of 19200 Baud, 8-bit data, no parity, and 1 stop bit (19200,8,n,1). The X-Net2 supports both point-to-point and multi-drop configurations.</P>
+<B><I><FONT FACE="Arial"><P>Message Protocol</P>
+</B></I></FONT><P ALIGN="JUSTIFY">Messages are ASCII (text) strings. While they contain hexadecimal numbers, the Hex numbers are represented by ASCII (text). Do not send actual hex data, but an ASCII (text) string that represents the value to be sent.</P>
+<P ALIGN="JUSTIFY">Each message begins with a message-type character and ends (with the exception of the NAK message) with an end-of-message character <FONT FACE="LinePrinter">'<B>.</B>'</FONT>. The message-type characters and the End Of Message (EOM) <FONT FACE="LinePrinter">'<B>.</B>'</FONT> character have been chosen so that they will not conflict with any characters that are possible in the body of the message. Each message to the X-Frame results in a response message from the X-Frame, with the exception of multi-drop broadcast messages.</P>
+<P ALIGN="JUSTIFY">In general, the protocol supports three main paradigms. These are the setting and getting of control-input values, getting control-output values, and sending trigger commands. User IDs, which identify a unique control, are specified with a 3 digit hexadecimal number, 000 through FFF. Note that the current version of X-Frame only supports up to 256 (FF Hex) devices, so the first digit of the User ID must be 0. In other words the usable range of user IDs is 000 to 0FF. Note that there is a separate numbering space for the User IDs in each control category, i.e. Trigger number 3 <FONT FACE="LinePrinter">'<B>T003</B>'</FONT> refers to a different X-Frame device than Set Value number 3 <FONT FACE="LinePrinter">'<B>S003</B>',</FONT> or Output number 3 <FONT FACE="LinePrinter">'<B>O003</B>'</FONT>. Control values are specified with a 2 digit hexadecimal number, 00 through FF.</P>
+<P ALIGN="JUSTIFY">The setting and getting of control-input values, using the <FONT FACE="LinePrinter">cSETVALUE '<B>S</B>'</FONT> and <FONT FACE="LinePrinter">cGETVALUE '<B>G</B>'</FONT> commands, are used to set the position or value for things such as a Level device’s Trim control or a Router device’s Select control. The 256 values that a control can take on correspond to 256 equidistant positions that a knob in an X-Frame view file connected to that control can take on. For example in a point to point system, to set the level control wired to Serial Input 14 in the view file to fully counter clockwise, one first must convert 14 which is a decimal number in the view file into Hex, which is 00E (remember that each user ID must be a 3 digit Hex number). Fully counter clockwise is 00 Hex. The <FONT FACE="LinePrinter">cSETVALUE</FONT> command is <FONT FACE="LinePrinter">'<B>S</B>'</FONT> and the end-of-message character is <FONT FACE="LinePrinter">'<B>.</B>'</FONT>. Putting this all together gives a command string:</P>
+<P ALIGN="JUSTIFY">S00E00.</P>
+<P ALIGN="JUSTIFY">Note that it is not required or desirable to put a carriage return after the end-of-message (EOM) character <FONT FACE="LinePrinter">'<B>.</B>'</FONT>. The X-Frame will accept the command when it receives the EOM character. Shortly thereafter it will return the value that the control has been set to:</P>
+<P ALIGN="JUSTIFY">V00E00.</P>
+<P ALIGN="JUSTIFY">You must wait for this response before sending any other commands. This is required since we are using a 2 wire, half duplex protocol, and messages can only go one way at a time.</P>
+<P ALIGN="JUSTIFY">To check what a control is set to, you can use the <FONT FACE="LinePrinter">cGETVALUE '<B>G</B>'</FONT> command. For example to check the setting of the level control wired to Serial Input 12, you send:</P>
+<P ALIGN="JUSTIFY">G00C.</P>
+<P ALIGN="JUSTIFY">Note that since you are requesting a control value, you do not send one. If the control was set to the mid point of its rotation you will get a response:</P>
+<P ALIGN="JUSTIFY">V00C80.</P>
+<P ALIGN="JUSTIFY">It is possible, and normal in some cases, for the value that a control actually takes on (and returns) to not match the value to which it was set. For instance, in the case of a switch-style control, any value sent between 00 and 7F Hex will result in a return value of 00 Hex, and any value sent between 80 and FF Hex will result in a return value of FF Hex. For example you may have sent to a switch wired to Serial Input 7:</P>
+<P ALIGN="JUSTIFY">S0073E.</P>
+<P>However since the switch can only be on or off it will be set to off and return:</P>
+<P ALIGN="JUSTIFY">V00700.</P>
+<P ALIGN="JUSTIFY">If commanding a Level device’s Trim control, the dB range of the Trim control (set up by Trim Min. and Trim Max.) is simply divided into 256 possible values if it is not greater than 20 dB. If it is greater than 20 dB, the top 20 dB will be expanded to encompass the majority of the control range, and the rest of the dB range will be compressed into the lower portion of the control range. In this way the action of a conventional audio taper level control will be simulated. </P>
+<P ALIGN="JUSTIFY">In Appendix A are tables that map control values to Router channel selections for various sized Routers.</P>
+<P ALIGN="JUSTIFY">The output-control protocol, using <FONT FACE="LinePrinter">cOUTPUTVALUE '<B>O</B>',</FONT> is used to check the value of devices such as gates. For a gate, the value will be either 00 or FF. For example to check the status of the gate wired to Serial Output 10 you would send:</P>
+<P ALIGN="JUSTIFY">O00A.</P>
+<P ALIGN="JUSTIFY">Note that you did not send a value, since this command is to check a value. If the Gate is open you will see this as the response:</P>
+<P ALIGN="JUSTIFY">V00AFF.</P>
+<P>Or if the gate was closed:</P>
+<P ALIGN="JUSTIFY">V00A00.</P>
+<P ALIGN="JUSTIFY">The trigger-control commands, using <FONT FACE="LinePrinter">cTRIGGER '<B>T</B>'</FONT>, are used to load SubPresets. There are 2 basic types of SubPreset devices available in the Device menu: front panel or serial triggered; and front panel, BoB, or serial triggered. The front panel and BoB triggered SubPresets are all in the range of 1 to 8 since there are only 8 front panel buttons, and 8 BoB control inputs. There is also a User definable SubPreset which can be set internally to be any number from 1 to 100. If set to 1 through 8 they will also be front panel controlled, and be functionally the same as the other front panel SubPreset devices. Inside the User definable SubPreset device the number must be entered three times, once in the SubPreset itself, once in the Button device, and once in the Serial Trigger device. To trigger SubPreset number 1 you would send:</P>
+<P ALIGN="JUSTIFY">T001.</P>
+<P ALIGN="JUSTIFY">Again note you do not set a value since a trigger just commands a SubPreset to load. After the SubPreset has loaded (the delay is dependent on the number of controls in the SubPreset), you will get a response:</P>
+<P ALIGN="JUSTIFY">V001FF.</P>
+<P ALIGN="JUSTIFY">Note that this response could come back as a result of a set value <FONT FACE="LinePrinter">cSETVALUE '<B>S</B>',</FONT> an output value <FONT FACE="LinePrinter">cOUTPUTVALUE '<B>O</B>',</FONT> or a trigger <FONT FACE="LinePrinter">cTRIGGER '<B>T</B>'</FONT> command. In each case it would be returning the current value of a different control in X-Frame. It is not possible to just look at the returned value and know what it is referring to without knowing the command that caused the response. For example you can set the value of the control wired to Serial Input 1:</P>
+<P ALIGN="JUSTIFY">S001FF.</P>
+<P>or you can read the status of the gate wired to Serial Output 1:</P>
+<P>G001.</P>
+<P ALIGN="JUSTIFY">or you can trip SubPreset 1:</P>
+<P ALIGN="JUSTIFY">T001.</P>
+<P ALIGN="JUSTIFY">and in each case get the same response back:</P>
+<P ALIGN="JUSTIFY">V001FF.</P>
+<P ALIGN="JUSTIFY">which would each refer to a different control in X-Frame. You can have in the same view file Serial Inputs, Serial Outputs, and Triggers all of which have the same number, but are totally independent of each other.</P>
+<P ALIGN="JUSTIFY">If you don’t want the user to be able to recall a SubPreset from the front panel, use the User SubPreset set to a number from 9 to 100. This is also suggested if you are using the multi-drop capability to recall SubPresets on more than one unit at a time. The front panel buttons will normally only control the SubPresets in the unit that they are on, and not any of the other units.</P>
+<P ALIGN="JUSTIFY">If you wish to allow the front panel buttons on one X-Frame to recall the SubPresets on multiple units, you need only wire a Serial Broadcast device to the output of the SubPreset device on the unit you wish to act as the master. When the SubPreset is triggered on this unit, whether by front panel button, virtual button on the X-Frame software screen, serial command, or BoB control input, a broadcast message will be transmitted from this master X-Frame to all the others on the network directing them to trigger the same SubPreset. The Serial Broadcast device determines which trigger command to transmit based on which SubPreset it is wired to. There will be a slight delay since the SubPreset must complete loading on the master unit before the broadcast message is sent. Only place the Serial Broadcast device(s) in one unit you select to be the master. If Serial Broadcast devices are used in more than one unit, you run the danger of creating a feedback loop, so that the first unit triggers the second and the second triggers the first.</P>
+<P ALIGN="JUSTIFY">The main use for the Serial Broadcast device is intended to be systems with multiple X-Frames but no control system such as an AMX or Crestron. If recalling SubPresets is all you need to do, this will save the cost of the control system.</P>
+<P ALIGN="JUSTIFY">If you are using this feature, it is best for the control system (if used) to listen for an unused RS-485 network before transmitting.</P>
+<P ALIGN="JUSTIFY">The get version command <FONT FACE="LinePrinter">cGETVERSION '<B>P</B>'</FONT> is used to determine the revision number of the code stored in the flash memory of the X-Frame. To get the version you send:</P>
+<P ALIGN="JUSTIFY">P.</P>
+<P ALIGN="JUSTIFY">To which the X-Frame will respond with something like this:</P>
+<P ALIGN="JUSTIFY">Q020B.</P>
+<P ALIGN="JUSTIFY">This indicates that the major revision number is 02 Hex or 2 in decimal, and the minor revision number is 0B Hex or 11 in decimal. This corresponds to a front panel flash version number 2.11.</P>
+<P ALIGN="JUSTIFY">If you send a command using a Uid that is not in the view file, the X-Frame will respond with a <FONT FACE="LinePrinter">cUNLISTEDUID '<B>U</B>'</FONT> and repeat back the Uid it does not find in the view file. For example if there was no Serial Input 37 in the view file (25 Hex), and you sent:</P>
+<P ALIGN="JUSTIFY">S02548.</P>
+<P ALIGN="JUSTIFY">the response would be:</P>
+<P ALIGN="JUSTIFY">U025.</P>
+<P ALIGN="JUSTIFY">This can happen easily if you forget that the decimal input and output numbers in the view file must be translated into Hex for use in X-Net2 control.</P>
+<P ALIGN="JUSTIFY">If you send an illegal message such as specifying a value as part of a get message, the X-Frame will respond with a Negative Acknowledge <FONT FACE="LinePrinter">cNAK '<B>?</B>'</FONT> instead of the normal response. For example if you sent:</P>
+<P ALIGN="JUSTIFY">G03057.</P>
+<P ALIGN="JUSTIFY">the X-Frame will respond with:</P>
+<P ALIGN="JUSTIFY">?</P>
+<P ALIGN="JUSTIFY">Note this is the only message in the X-Net2 protocol which does not end in an end of message <FONT FACE="LinePrinter">cEOM '<B>.</B>'</FONT>.</P>
+<P ALIGN="JUSTIFY">No response will be sent if garbled data or illegal commands are received by an X-Frame. These can be caused by collisions between messages from the control system, and responses from the X-Frame. Although no response is sent, the X-Frame does display X-Net2 errors on its front panel LCD such as: syntax (illegal commands), framing (reversed RS-485 wires, hardware problems), and overflow (too many broadcast commands).</P>
+<B><I><FONT FACE="Arial"><P>Point to Point Operation</P>
+</B></I></FONT><P ALIGN="JUSTIFY">In a point to point configuration, commands are identical to the former X-Net, and the responses are also identical except for the response to the <FONT FACE="LinePrinter">cGETVERSION '<B>P</B>'</FONT> command. Every command sent will result in a response back from the X-Frame. Since the serial connection is half-duplex, the control system must wait for the X-Frame response to be received before attempting to send another command. The exact delay will vary randomly, so a fixed delay before sending another command, unless extremely long, can’t be used reliably. It is particularly easy to get into trouble with the next command sent after triggering a SubPreset, since the acknowledgement is not sent back until after the SubPreset is finished loading. The time this takes is determined by the number of controls to be set in a given SubPreset, plus a random variation. If the control system attempts to send a second command before the X-Frame has finished sending its response, the two messages may collide, and the X-Frame will not respond correctly. Point to point commands are <B>NOT</B> prepended with the character constant <FONT FACE="LinePrinter">cMULTIDROP '<B>M</B>'</FONT> and the multi-drop address. The response message from the X-Frame does NOT include its multi-drop address (even if set in the view file). Point to point messages sent on a multi-drop network will cause all the units to react, and send response messages. Since these response messages will not all come back at the same instant in time, it will be very difficult for the control system to determine when it is safe to send a second command. There could be contention, which may cause a hardware failure! For this reason it is not suggested to attempt sending point to point messages in a multi-drop system. Instead use the broadcast capability of the multi-drop addressing if you wish to send the same message to all units.</P>
+<B><I><FONT FACE="Arial"><P>Multi-drop Addressing</P>
+</B></I></FONT><P ALIGN="JUSTIFY">In a multi-drop configuration, messages can be routed to a specific X-Frame by prepending the message with the character constant <FONT FACE="LinePrinter">cMULTIDROP '<B>M</B>'</FONT> and two hexadecimal characters indicating the multi-drop address of the X-Frame. Messages can be broadcast to all X-Frames on a multi-drop network by using the broadcast address FF Hex. Note that the X-Frame does NOT return a response to a broadcast message. The default X-Frame multi-drop address is 0, which is the NULL address. The X-Frame does NOT respond to any multi-drop messages while its multi-drop address is equal to 0. The X-Frame WILL send a response to all other multi-drop messages. The address can be changed through the ‘Compile Options’ dialog box under the ‘File’ menu. The X-Frame unit multi-drop address as entered into the ‘Compile Options’ dialog box can be any decimal value from 0 to 254. The corresponding hexadecimal value of 00 to FE must be used in the X-Net2 command. For example to tell unit 10 to set Serial Input 14 fully counterclockwise you would send:</P>
+<P ALIGN="JUSTIFY">M0AS00E00.</P>
+<P ALIGN="JUSTIFY">and the X-Frame would respond:</P>
+<P ALIGN="JUSTIFY">V00E00.</P>
+<P ALIGN="JUSTIFY">Note that the response does not include the unit address.</P>
+<P ALIGN="JUSTIFY">The X-Frame also has the capability to generate broadcast multi-drop trigger messages using the Serial Broadcast device (new in Release 1.3). This device may only be wired to the control output of a SubPreset device. When the SubPreset is triggered by the front panel push button, BoB control input, or serial command, and has completed loading, it will trigger the Serial Broadcast device which will relay the trigger command to all other X-Frames on the network whose multi-drop addresses are other than 0. If they have a corresponding SubPreset, it will be triggered. This capability was designed to allow a single front panel push button or BoB control input to be used to trigger SubPresets in multiple X-Frames even in cases where X-Net2 is not otherwise being used.</P>
+<B><I><FONT FACE="Arial"><P>Electrical Connections</P>
+</B></I></FONT><P ALIGN="JUSTIFY">Note that RS-485 can only support 31 X-Frames without the use of repeaters. For further information on RS-485 communication we suggest reading B&amp;B Electronics "RS-422 and RS-485 Application Note" available from the B&amp;B web site:</P>
+<P ALIGN="JUSTIFY">http://www.bb-elec.com/</P>
+<P ALIGN="JUSTIFY">X-Net2 is 2 wire RS-485. The RS-485 connections on the rear of the X-Frame are labeled "Net". There is no difference between the two sets of Net connections, they are simply tied together to facilitate daisy-chaining of multiple X-Frames. The "-" connection is equivalent to the RS-485 defined "A" connection, and the "+" connection is equivalent to the RS-485 defined "B" connection. There is a ground connection available next to the Net connections (it is not labeled), which should be used. Even though this type of circuit is called "2 wire", it is important to provide a third wire ground connection for reliable operation. A good cable to use for RS-485 is common and inexpensive Cat 5 computer network cable. Use one pair for the RS-485 signal and the other pairs as ground connections. X-Frame does not use isolated RS-485 connections, and does not bias or terminate the connections. When long RS-485 cables are used, placing a 120 ohm termination resistor across each of the two extreme ends of the line will help performance. No more than two terminators should ever be used on an RS-485 circuit.</P>
+<P ALIGN="JUSTIFY">In cases where the local grounds are of different potential, or in noisy electrical environments, it is suggested that optical RS-485 isolators be used. Besides improving noise immunity and increasing data reliability in extreme environments, they also can help protect the X-Frame’s RS-485 port from damage due to electrical surges.</P>
+<B><I><FONT FACE="Arial"><P>POINT TO POINT MESSAGE STRUCTURES QUICK CHART</P></B></I></FONT>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=612>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<P ALIGN="CENTER"><B><FONT FACE="Arial">Message</B></FONT></TD>
+<TD WIDTH="68%" VALIGN="TOP" COLSPAN=9>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Message fields</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Style</B></FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<FONT FACE="Arial"><P ALIGN="CENTER">Type</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Hex Control ID</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Hex Control Value</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Hex Version</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<FONT FACE="Arial"><P ALIGN="CENTER">End of Message</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Set Value</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">S</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Get Value</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">G</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Get Output</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">O</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Trigger</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">T</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Get Version</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">P</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Value</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">V</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Unlisted Uid</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">U</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Version</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Q</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXXX</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="18%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">Nak</FONT></TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">?</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="13%" VALIGN="TOP" COLSPAN=3>
+<P>&nbsp;</TD>
+<TD WIDTH="14%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+</TABLE>
+
+<P>&nbsp;</P>
+<B><I><FONT FACE="Arial"><P>MULTI POINT MESSAGE STRUCTURES QUICK CHART</P></B></I></FONT>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=612>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<P ALIGN="CENTER"><B><FONT FACE="Arial">Message</B></FONT></TD>
+<TD WIDTH="72%" VALIGN="TOP" COLSPAN=13>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Message fields</B></FONT></TD>
+<TD WIDTH="12%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Style</B></FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Multi Drop Type</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Hex<BR>
+Unit Address</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Type</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Hex Control ID</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Hex Control Value</FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Hex Version</FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">End of Message</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<P>&nbsp;</TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Set Value</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">M</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">S</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Get Value</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">M</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">G</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Get Output</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">M</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">O</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Trigger</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">M</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">T</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Get Version</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">M</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">P</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">request</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Value</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">V</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XX</FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Unlisted Uid</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">U</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXX</FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Version</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">Q</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<FONT FACE="Arial"><P ALIGN="CENTER">XXXX</FONT></TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<B><FONT FACE="Arial"><P ALIGN="CENTER">.</B></FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+<TR><TD WIDTH="16%" VALIGN="TOP">
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Nak</FONT></TD>
+<TD WIDTH="8%" VALIGN="TOP" COLSPAN=3>
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="8%" VALIGN="TOP">
+<B><FONT FACE="Arial"><P ALIGN="CENTER">?</B></FONT></TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="11%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP">
+<P>&nbsp;</TD>
+<TD WIDTH="10%" VALIGN="TOP" COLSPAN=4>
+<P>&nbsp;</TD>
+<TD WIDTH="15%" VALIGN="TOP" COLSPAN=2>
+<FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">response</FONT></TD>
+</TR>
+</TABLE>
+
+<P>&nbsp;</P>
+<B><I><FONT FACE="Arial"><P>C-LIKE MESSAGE DEFINITION</P>
+</B></I></FONT><P ALIGN="JUSTIFY">This section defines the message protocol using "C-like" declarations of constants and structures. The convention here is that words beginning with ‘c’, such as cSETVALUE and cGETVALUE, are character constants. Words beginning with ‘f’’, such as fUid and fVal, are message field structures. Words beginning with ‘m’, such as mSetValue and mGetValue, are message structures.</P>
+<FONT FACE="LinePrinter"><P>//---- Message constants</P></FONT>
+<TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH=433>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<P><FONT FACE="LinePrinter">const char cGETVERSION</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'P';</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cMULTIDROP</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'M';</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cSETVALUE</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'S';</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cGETVALUE</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'G'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cOUTPUTVALUE</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'O'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cTRIGGER</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'T'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cVALUE</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'V'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cUNLISTEDUID</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'U'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cVERSION</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= 'Q';</FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cNAK</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= '?'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fType value</FONT></TD>
+</TR>
+<TR><TD WIDTH="52%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>const char cEOM</FONT></TD>
+<TD WIDTH="15%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>= '.'; </FONT></TD>
+<TD WIDTH="33%" VALIGN="TOP">
+<FONT FACE="LinePrinter"><P>// an fEom value</FONT></TD>
+</TR>
+</TABLE>
+
+<FONT FACE="LinePrinter"><P><BR>
+//---- Message fields<BR>
+/* fType: Message Type. 1 character, denotes the message type.<BR>
+*/<BR>
+struct fType {<BR>
+char data;<BR>
+};</P>
+<P>/* fAddr: Multi-drop Address. 2 ASCII hexadecimal digits, specifies the X-Frame’s address on the multi-drop X-Net Serial network.<BR>
+*/<BR>
+struct fAddr {<BR>
+char data[2];<BR>
+};</P>
+<P>/* fUid: User ID. 3 ASCII hexadecimal digits, the first of which must be a 0. Specifies the Id in the X-Net External Serial device. Note that each category of devices has its own set of Id’s to choose from, so that X-Net Level Input number 4 is different from X-Net Output number 4, etc.<BR>
+*/<BR>
+struct fUid {<BR>
+char data[3];<BR>
+};</P>
+<P>/* fVal: Control Value. 2 ASCII hexadecimal digits, specifies a control value between 0 and 255.<BR>
+*/<BR>
+struct fVal {<BR>
+char data[2];<BR>
+};</P>
+<P>/* fVer: Version number. 4 ASCII hexadecimal digits, specifies a major version number between 0 and 255 and a minor version number between 0 and 255.<BR>
+*/<BR>
+struct fVer {<BR>
+char data[4];<BR>
+};</P>
+<P>/* fEom: End Of Message. 1 character, appears at the end of every message, excepting mNak.<BR>
+*/<BR>
+struct fEom {<BR>
+char data = cEOM;<BR>
+};</P>
+<P>//---- Messages</P>
+<P>/* mSetValue: Set Control Value. Request sent by a client to set the value of a Serial Input device. */<BR>
+struct mSetValue {<BR>
+fType type = cSETVALUE;<BR>
+fUid id;<BR>
+fVal val;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mGetValue: Get Control Value. Request sent by a client requesting the value of a Serial Input device.<BR>
+*/<BR>
+struct mGetValue {<BR>
+fType type = cGETVALUE;<BR>
+fUid id;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mGetOutput: Get Output Value. Request sent by a client requesting the value of a Serial Output device.<BR>
+*/<BR>
+struct mGetOutput {<BR>
+fType type = cOUTPUTVALUE;<BR>
+fUid id;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mTrigger: Set Trigger Value. Request sent by a client to send a trigger event.<BR>
+*/<BR>
+struct mTrigger {<BR>
+fType type = cTRIGGER;<BR>
+fUid id;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mGetVersion: Get Software Version. Request sent by a client requesting the software version.<BR>
+*/<BR>
+struct mGetVersion {<BR>
+fType type = cGETVERSION;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mValue: Control Value. Response sent to the client acknowledging an mGetValue, mGetOutput, mTrigger, or mSetValue. Note that it is possible, and normal in some cases, that the val field will not match the val that was sent in the mSetValue. Note that for mTrigger messages, the response will always be ‘FF’, and for mGetOutput messages, the response will be ‘00’ if the output is not set, and ‘FF’ if the output is set.<BR>
+*/<BR>
+struct mValue {<BR>
+fType type = cVALUE;<BR>
+fUid id;<BR>
+fVal val;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mUnlistedUid: Unlisted User ID error. Response indicating the fUid specified in the mSetValue or mGetValue was not found in the X-Frame.<BR>
+*/<BR>
+struct mUnlistedUid {<BR>
+fType type = cUNLISTEDUID;<BR>
+fUid id;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mVersion: Software Version. Response indicating the software version running in the X-Frame.<BR>
+*/<BR>
+struct mVersion {<BR>
+fType type = cVERSION;<BR>
+fVer ver;<BR>
+fEom eom;<BR>
+};</P>
+<P>/* mNak: Negative Acknowledge. Response sent to client upon receipt of illegal message (i.e. specifying data for a ‘Get’ message. Note that no response is sent for garbled data or illegal command codes. The only message that does not end in fEom!<BR>
+*/<BR>
+struct mNak {<BR>
+fType = cNAK;<BR>
+};</P>
+</FONT><P>&nbsp;</P>
+<B><FONT FACE="Arial" SIZE=4><P>Flow Control</P>
+</B></FONT><P ALIGN="JUSTIFY">X-Net2 is implemented using a half-duplex RS-485 protocol, with the X-Frame acting as a slave. Therefore, except when the Serial Broadcast device is used, the X-Frame will never send out a character unless asked to, and in most cases the master must wait for a response before sending the next message. Also, the X-Frame will not send a NAK unless the message was completely delivered but just not right (i.e. a value specified for an mGetOutput or mTrigger message, or a missing value for a mSetValue message). </P>
+<B><I><FONT FACE="Arial"><P>Serial Control Example and Experimentation</P>
+</B></I></FONT><P ALIGN="JUSTIFY">Using a terminal program you can experiment with X-Net2 serial control. Your terminal program must be set for 19,200 baud, 8-bit data, no parity, and 1 stop bit (19200,8,n,1), and for a serial port that is not otherwise in use on your computer. You also must either have a serial output card capable of 2 wire RS-485 communications, or use an external converter such as a B &amp; B Electronics 485PTBR. (http://www.bb-elec.com/)</P>
+<P ALIGN="JUSTIFY">The 485PTBR like most RS-485 cards and adapters has separate transmit and receive terminals. This is to allow 4 wire 485 operation. For two wire operation the TD(A) terminal must be connected to the RD(A) terminal and to the wire going to one of the - Net terminals on the back of the X-Frame. The TD(B) terminal must be connected to the RD(B) terminal and to the wire going to one of the + Net terminals on the back of the X-Frame. A wire must also be run from one of the SG terminals on the 485PTBR to one of the unlabeled ground terminals next to the Net terminals on the rear of the X-Frame. Solder an 110,000 ohm resistor at point R2 on the 485PTBR. This sets the receive/transmit switching circuit for 19,200 baud operation. Plus 12 VDC must be connected to the +12VDC terminal of the 485PTBR from a power supply such as the 485PS2, and the negative lead connected to one of the SG terminals.</P>
+<P ALIGN="JUSTIFY">Plug the 485PTBR into the RS-232 connection on your computer that was selected in your terminal program, and you should be ready to experiment.</P>
+<P ALIGN="JUSTIFY">For example, since the number 14 in decimal is E in Hex, and the number 47 in decimal is 2F in Hex, then to set the value of the 14<SUP>th</SUP> Serial Input device to 47, type:</P>
+<P ALIGN="JUSTIFY">S00E2F.</P>
+<P ALIGN="JUSTIFY">The response should be:</P>
+<P ALIGN="JUSTIFY">V00E2F.</P>
+<P ALIGN="JUSTIFY">and the position of both the knob in the Serial Input device and the device it is wired to should change. To get this value later, type:</P>
+<P ALIGN="JUSTIFY">G00E.</P>
+<P ALIGN="JUSTIFY">The response should be:</P>
+<P ALIGN="JUSTIFY">V00E2F.</P>
+<P ALIGN="JUSTIFY">To load the 7<SUP>th</SUP> preset, type:</P>
+<P ALIGN="JUSTIFY">T007.</P>
+<P ALIGN="JUSTIFY">The X-Frame will respond with:</P>
+<P ALIGN="JUSTIFY">V007FF.</P>
+<P ALIGN="JUSTIFY">To check the status of the 6<SUP>th</SUP> Serial Output device, type:</P>
+<P ALIGN="JUSTIFY">O006.</P>
+<P ALIGN="JUSTIFY">and the response should be either:</P>
+<P ALIGN="JUSTIFY">V00600.</P>
+<P ALIGN="JUSTIFY">Or</P>
+<P ALIGN="JUSTIFY">V006FF.</P>
+<P ALIGN="JUSTIFY">If a device is unknown, the response will be:</P>
+<P ALIGN="JUSTIFY">U###.</P>
+<P ALIGN="JUSTIFY">Where ### is the user ID, instead of:</P>
+<P ALIGN="JUSTIFY">V###vv.</P>
+<P ALIGN="JUSTIFY">The LCD of the X-Frame will display any errors received on the X-Net2, either syntax or protocol.</P>
+<B><FONT FACE="Arial" SIZE=4><P>Backwards Compatibility with X-Net</P>
+</B></FONT><P ALIGN="JUSTIFY">X-Net2 is backwards compatible with X-Net. The differences are:</P>
+<P ALIGN="JUSTIFY">1.&#9;X-Net did not support multi-drop operation.</P>
+<P ALIGN="JUSTIFY">2.&#9;When you sent a <FONT FACE="LinePrinter">cGETVERSION '<B>P</B>'</FONT> command you did not need the <FONT FACE="LinePrinter">cEOM '<B>.</B>'</FONT> to follow it. Therefore what you would send would just be:</P>
+<P ALIGN="JUSTIFY">P</P>
+<P ALIGN="JUSTIFY">3.&#9;The response you got to this command would look like:</P>
+<P ALIGN="JUSTIFY">X-Frame Xternal Network: Ver 2.9</P>
+<P ALIGN="JUSTIFY">4.&#9;Level controls in X-Net were strictly linear in dB, and were not modified beyond a 20 dB range.</P>
+<P ALIGN="JUSTIFY">5.&#9;Version 1.2 and earlier of X-Frame do not contain the User SubPreset, Serial Broadcast, or remote controllable 1 by N Router devices introduced in version 1.3, and are not compatible with them.</P>
+<B><FONT FACE="Arial" SIZE=4><P>Appendix A - Serial Control Value to Device Control Value Tables</P>
+</B></FONT><P ALIGN="JUSTIFY">Some selected mappings of serial control values to device control values follow. You can also generate a table for any other control using a command in the X-Frame Terminal window in the following manner - after compiling a view file, twiddle the control of interest, switch to the Terminal window and press the ‘v’ on your keyboard. This will invoke the (V)alueTable command, which will print the table to the screen. You can also capture the table to a text file or printer by invoking the appropriate Terminal window modes.</P>
+<B><I><FONT FACE="Arial"><P>Control value to Switch input selection table.</P></B></I></FONT>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=595>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<P ALIGN="CENTER"><FONT FACE="Monospaced">0x00: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x01: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x02: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x03: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x04: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x05: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x06: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x07: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x08: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x09: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x10: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x11: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x12: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x13: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x14: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x15: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x16: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x17: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x18: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x19: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x20: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x21: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x22: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x23: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x24: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x25: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x26: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x27: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x28: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x29: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x30: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x31: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x32: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x33: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x34: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x35: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x36: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x37: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x38: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x39: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x40: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x41: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x42: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x43: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x44: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x45: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x46: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x47: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x48: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x49: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x50: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x51: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x52: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x53: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x54: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x55: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x56: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x57: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x58: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x59: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x60: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x61: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x62: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x63: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x64: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x65: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x66: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x67: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x68: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x69: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x70: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x71: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x72: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x73: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x74: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x75: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x76: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x77: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x78: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x79: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7a: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7b: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7c: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7d: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7e: OFF</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7f: OFF</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x80: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x81: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x82: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x83: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x84: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x85: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x86: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x87: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x88: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x89: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8a: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8b: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8c: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8d: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8e: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8f: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x90: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x91: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x92: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x93: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x94: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x95: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x96: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x97: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x98: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x99: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9a: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9b: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9c: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9d: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9e: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9f: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaa: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xab: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xac: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xad: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xae: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaf: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xba: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbb: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbc: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbd: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbe: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbf: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xca: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcb: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcc: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcd: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xce: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcf: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xda: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdb: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdc: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdd: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xde: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdf: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xea: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xeb: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xec: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xed: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xee: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xef: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf0: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf1: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf2: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf3: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf4: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf5: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf6: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf7: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf8: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf9: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfa: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfb: ON</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfc: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfd: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfe: ON</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xff: ON</FONT></TD>
+</TR>
+</TABLE>
+
+<B><I><FONT FACE="Arial"><P>Control value to Router input selection table: 2x1 Router</P>
+</B></I></FONT><P>(These values are for the Router Input Select control)</P>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=595>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<P ALIGN="CENTER"><FONT FACE="Monospaced">0x00: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x01: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x02: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x03: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x04: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x05: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x06: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x07: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x08: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x09: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x10: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x11: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x12: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x13: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x14: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x15: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x16: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x17: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x18: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x19: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x20: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x21: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x22: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x23: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x24: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x25: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x26: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x27: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x28: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x29: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x30: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x31: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x32: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x33: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x34: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x35: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x36: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x37: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x38: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x39: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x40: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x41: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x42: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x43: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x44: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x45: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x46: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x47: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x48: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x49: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x50: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x51: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x52: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x53: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x54: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x55: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x56: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x57: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x58: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x59: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x60: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x61: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x62: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x63: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x64: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x65: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x66: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x67: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x68: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x69: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x70: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x71: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x72: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x73: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x74: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x75: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x76: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x77: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x78: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x79: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x80: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x81: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x82: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x83: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x84: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x85: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x86: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x87: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x88: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x89: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x90: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x91: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x92: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x93: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x94: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x95: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x96: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x97: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x98: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x99: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa0: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa1: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa2: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa3: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa4: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa5: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa6: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa7: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa8: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa9: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaa: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xab: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xac: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xad: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xae: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaf: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb0: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb1: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb2: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb3: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb4: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb5: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb6: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb7: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb8: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb9: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xba: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbb: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbc: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbd: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbe: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbf: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc0: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc1: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc2: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc3: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc4: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc5: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc6: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc7: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc8: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc9: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xca: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcb: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcc: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcd: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xce: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcf: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd0: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd1: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd2: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd3: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd4: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd5: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd6: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd7: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd8: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd9: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xda: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdb: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdc: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdd: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xde: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdf: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe0: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe1: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe2: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe3: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe4: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe5: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe6: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe7: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe8: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe9: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xea: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xeb: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xec: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xed: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xee: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xef: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf0: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf1: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf2: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf3: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf4: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf5: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf6: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf7: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf8: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf9: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfa: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfb: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfc: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfd: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfe: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xff: 2</FONT></TD>
+</TR>
+</TABLE>
+
+<B><I><FONT FACE="Arial"><P>Control value to Router input selection table: 4x1 Router</P>
+</B></I></FONT><P>(These values are for the Router Input Select control)</P>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=595>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<P ALIGN="CENTER"><FONT FACE="Monospaced">0x00: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x01: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x02: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x03: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x04: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x05: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x06: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x07: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x08: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x09: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x10: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x11: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x12: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x13: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x14: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x15: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x16: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x17: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x18: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x19: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x20: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x21: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x22: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x23: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x24: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x25: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x26: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x27: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x28: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x29: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x30: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x31: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x32: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x33: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x34: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x35: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x36: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x37: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x38: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x39: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x40: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x41: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x42: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x43: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x44: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x45: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x46: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x47: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x48: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x49: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x50: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x51: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x52: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x53: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x54: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x55: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x56: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x57: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x58: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x59: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x60: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x61: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x62: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x63: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x64: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x65: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x66: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x67: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x68: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x69: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x70: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x71: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x72: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x73: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x74: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x75: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x76: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x77: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x78: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x79: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x80: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x81: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x82: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x83: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x84: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x85: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x86: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x87: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x88: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x89: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x90: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x91: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x92: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x93: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x94: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x95: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x96: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x97: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x98: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x99: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa0: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa1: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa2: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa3: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa4: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa5: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa6: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa7: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa8: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa9: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaa: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xab: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xac: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xad: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xae: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaf: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb0: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb1: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb2: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb3: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb4: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb5: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb6: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb7: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb8: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb9: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xba: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbb: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbc: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbd: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbe: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbf: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc0: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc1: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc2: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc3: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc4: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc5: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc6: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc7: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc8: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc9: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xca: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcb: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcc: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcd: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xce: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcf: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd0: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd1: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd2: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd3: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd4: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd5: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd6: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd7: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd8: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd9: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xda: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdb: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdc: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdd: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xde: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdf: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe0: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe1: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe2: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe3: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe4: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe5: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe6: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe7: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe8: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe9: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xea: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xeb: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xec: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xed: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xee: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xef: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf0: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf1: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf2: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf3: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf4: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf5: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf6: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf7: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf8: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf9: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfa: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfb: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfc: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfd: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfe: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xff: 4</FONT></TD>
+</TR>
+</TABLE>
+
+<B><I><FONT FACE="Arial"><P>Control value to Router input selection table: 8x1 Router</P>
+</B></I></FONT><P>(These values are for the Router Input Select control)</P>
+<TABLE BORDER CELLSPACING=2 CELLPADDING=7 WIDTH=595>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<P ALIGN="CENTER"><FONT FACE="Monospaced">0x00: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x01: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x02: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x03: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x04: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x05: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x06: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x07: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x08: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x09: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0a: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0b: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0c: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0d: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0e: Off</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x0f: Off</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x10: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x11: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x12: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x13: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x14: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x15: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x16: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x17: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x18: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x19: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x1f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x20: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x21: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x22: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x23: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x24: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x25: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x26: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x27: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x28: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x29: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2a: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2b: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2c: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2d: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2e: 1</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x2f: 1</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x30: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x31: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x32: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x33: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x34: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x35: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x36: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x37: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x38: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x39: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x3f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x40: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x41: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x42: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x43: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x44: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x45: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x46: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x47: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x48: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x49: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4a: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4b: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4c: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4d: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4e: 2</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x4f: 2</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x50: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x51: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x52: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x53: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x54: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x55: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x56: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x57: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x58: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x59: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5a: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5b: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5c: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5d: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5e: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x5f: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x60: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x61: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x62: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x63: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x64: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x65: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x66: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x67: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x68: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x69: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6a: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6b: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6c: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6d: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6e: 3</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x6f: 3</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x70: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x71: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x72: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x73: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x74: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x75: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x76: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x77: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x78: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x79: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7a: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7b: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7c: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7d: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7e: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x7f: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x80: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x81: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x82: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x83: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x84: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x85: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x86: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x87: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x88: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x89: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8a: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8b: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8c: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8d: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8e: 4</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x8f: 4</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x90: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x91: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x92: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x93: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x94: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x95: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x96: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x97: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x98: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x99: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9a: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9b: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9c: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9d: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9e: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0x9f: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa0: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa1: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa2: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa3: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa4: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa5: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa6: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa7: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa8: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xa9: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaa: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xab: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xac: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xad: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xae: 5</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xaf: 5</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb0: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb1: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb2: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb3: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb4: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb5: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb6: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb7: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb8: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xb9: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xba: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbb: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbc: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbd: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbe: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xbf: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc0: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc1: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc2: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc3: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc4: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc5: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc6: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc7: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc8: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xc9: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xca: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcb: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcc: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcd: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xce: 6</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xcf: 6</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd0: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd1: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd2: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd3: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd4: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd5: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd6: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd7: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd8: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xd9: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xda: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdb: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdc: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdd: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xde: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xdf: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe0: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe1: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe2: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe3: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe4: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe5: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe6: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe7: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe8: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xe9: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xea: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xeb: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xec: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xed: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xee: 7</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xef: 7</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf0: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf1: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf2: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf3: 8</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf4: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf5: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf6: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf7: 8</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf8: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xf9: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfa: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfb: 8</FONT></TD>
+</TR>
+<TR><TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfc: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfd: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xfe: 8</FONT></TD>
+<TD WIDTH="25%" VALIGN="TOP">
+<FONT FACE="Monospaced"><P ALIGN="CENTER">0xff: 8</FONT></TD>
+</TR>
+</TABLE>
+
+</BODY>
+</HTML>
